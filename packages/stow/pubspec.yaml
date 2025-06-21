@@ -1,0 +1,4 @@
+name: stow
+resolution: workspace
+environment:
+  sdk: ^3.8.0

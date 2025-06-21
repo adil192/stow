@@ -1,0 +1,4 @@
+name: stow_project
+
+packages:
+  - packages/*

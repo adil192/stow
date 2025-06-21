@@ -1,0 +1,9 @@
+name: stow_project
+repository: https://github.com/adil192/stow
+publish_to: none
+environment:
+  sdk: ^3.8.0
+workspace:
+  - packages/stow
+dev_dependencies:
+  melos: ^6.3.3
