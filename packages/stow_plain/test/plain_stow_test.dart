@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stow_plain/stow_plain.dart';
+
+typedef JsonMap = Map<String, dynamic>;
 
 void main() {
   group('PlainStow', () {
@@ -51,6 +55,28 @@ void main() {
       expect(await stow1.protectedRead(), newValue);
       expect(stow2.value, defaultValue);
       expect(await stow2.protectedRead(), defaultValue);
+    });
+
+    test('JsonCodec', () async {
+      final objectDecoded = {'key': 'value', 'number': 42};
+      final objectEncoded = jsonEncode(objectDecoded);
+      final arrayDecoded = ['item1', 'item2', 3.14, false];
+      final arrayEncoded = jsonEncode(arrayDecoded);
+
+      final stowWithCodec = PlainStow('json_codec', const {}, JsonCodec());
+      final stowWithoutCodec = PlainStow.simple('json_codec', '{}');
+      await stowWithCodec.waitUntilRead();
+      await stowWithoutCodec.waitUntilRead();
+      expect(stowWithCodec.value, const {});
+      expect(stowWithoutCodec.value, '{}');
+
+      stowWithCodec.value = objectDecoded;
+      await stowWithCodec.waitUntilWritten();
+      expect(await stowWithoutCodec.protectedRead(), objectEncoded);
+
+      stowWithoutCodec.value = arrayEncoded;
+      await stowWithoutCodec.waitUntilWritten();
+      expect(await stowWithCodec.protectedRead(), arrayDecoded);
     });
   });
 }
