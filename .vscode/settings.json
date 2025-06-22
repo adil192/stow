@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/.dart_tool/": true,
+        "**/.idea/": true,
+        "**/melos_stow*.iml": true,
+        "**/.flutter-plugins-dependencies": true,
+    }
+}

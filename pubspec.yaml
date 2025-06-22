@@ -6,5 +6,6 @@ environment:
 workspace:
   - packages/stow
   - packages/stow_codecs
+  - packages/stow_plain
 dev_dependencies:
   melos: ^7.0.0-dev.9

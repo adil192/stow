@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mutex/mutex.dart';
 
-abstract class Stow<Key,  Value, EncodedValue> extends ChangeNotifier implements ValueNotifier<Value> {
+abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
+    implements ValueNotifier<Value> {
   Stow(this.key, this.defaultValue, this.codec) {
     unawaited(read());
     addListener(write);
@@ -21,7 +22,10 @@ abstract class Stow<Key,  Value, EncodedValue> extends ChangeNotifier implements
 
   @override
   Value get value {
-    if (_value is! Value) throw StateError('Value has not been initialized yet.');
+    if (_value is! Value) {
+      // i.e. if value is null and [Value] is not nullable
+      throw StateError('Value has not been initialized yet.');
+    }
     return _value as Value;
   }
 
