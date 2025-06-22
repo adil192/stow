@@ -41,7 +41,6 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   @override
   Future<Value> protectedRead() async {
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey(key)) return defaultValue;
 
     final encodedValue = prefs.get(key);
     if (encodedValue == null) return defaultValue;
