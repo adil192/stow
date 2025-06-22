@@ -78,4 +78,10 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   @mustBeOverridden
   @visibleForTesting
   Future<void> protectedWrite(Value value);
+
+  /// Waits until the read mutex is unlocked.
+  Future<void> waitUntilRead() => _readMutex.protect(() async {});
+
+  /// Waits until the write mutex is unlocked.
+  Future<void> waitUntilWritten() => _writeMutex.protect(() async {});
 }
