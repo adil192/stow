@@ -62,16 +62,20 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// [setValueWithoutNotifying].
   /// Conversely, if you need to manually trigger a write,
   /// use [notifyListeners].
-  Future<void> write() => _writeMutex.protect(() async {});
+  Future<void> write() => _writeMutex.protect(() async {
+    await protectedWrite(value);
+  });
 
   /// Reads from the underlying storage and returns a value if found
   /// or the [defaultValue] otherwise.
   @protected
   @mustBeOverridden
+  @visibleForTesting
   Future<Value> protectedRead();
 
   /// Writes a [value] to the underlying storage.
   @protected
   @mustBeOverridden
+  @visibleForTesting
   Future<void> protectedWrite(Value value);
 }

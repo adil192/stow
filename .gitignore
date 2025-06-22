@@ -27,7 +27,11 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 
+# IntelliJ files
 .idea/
 *.iml
 *.ipr
 *.iws
+
+# Test coverage
+packages/**/coverage/

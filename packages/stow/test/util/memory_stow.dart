@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:stow/stow.dart';
 import 'package:stow_codecs/stow_codecs.dart';
 
@@ -13,20 +14,22 @@ class MemoryStow<Value> extends Stow<String, Value, Value> {
   /// Reads the value from the dictionary store.
   @override
   @protected
+  @visibleForTesting
   Future<Value> protectedRead() async {
-    // If the value is not found, return the default value.
     if (!_store.containsKey(key)) {
+      printOnFailure('MemoryStow: Key $key not found, returning default value');
       return defaultValue;
     }
-    // Return the value from the store.
+    printOnFailure('MemoryStow: Reading value for key $key');
     return _store[key] as Value;
   }
 
   /// Stores the [value] in the dictionary store.
   @override
   @protected
+  @visibleForTesting
   Future<void> protectedWrite(Value value) async {
-    // Store the value in the dictionary.
+    printOnFailure('MemoryStow: Writing value $value for key $key');
     _store[key] = value;
   }
 }

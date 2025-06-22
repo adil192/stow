@@ -9,3 +9,15 @@ workspace:
   - packages/stow_plain
 dev_dependencies:
   melos: ^7.0.0-dev.9
+
+melos:
+  scripts:
+    test:single:
+      run: melos exec --dir-exists="test" --fail-fast -- flutter test --no-pub --coverage
+      description: Run Flutter tests for a specific package in this project.
+      packageFilters:
+        dirExists:
+          - test
+    test:
+      run: melos run test:single --no-select
+      description: Run Flutter tests for all packages in this project.
