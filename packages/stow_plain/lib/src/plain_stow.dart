@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stow/stow.dart';
@@ -8,22 +7,32 @@ import 'package:stow_codecs/stow_codecs.dart';
 /// A [Stow] implementation that stores plaintext (unencrypted) values with
 /// shared preferences.
 class PlainStow<Value> extends Stow<String, Value, Object?> {
-  PlainStow(super.key, super.defaultValue, super.codec)
+  /// Creates a [PlainStow] to store unencrypted values
+  /// using shared preferences.
+  ///
+  /// This constructor supports any codec but is more verbose than the
+  /// other constructors.
+  ///
+  /// See also:
+  /// - [PlainStow.simple] for storing simple values.
+  /// - [PlainStow.json] for storing JSON-encodable values.
+  PlainStow.custom(super.key, super.defaultValue, super.codec)
     : assert(key.isNotEmpty),
       assert(
         codec != null,
         'PlainStow requires a codec to encode and decode values.',
       );
 
-  /// Creates a [PlainStow] to store plaintext values with shared preferences.
+  /// Creates a [PlainStow] to store unencrypted simple values
+  /// using shared preferences.
   ///
   /// This constructor only supports simple types that are directly
   /// supported by shared_preferences: `int`, `bool`, `double`, `String`,
   /// and `List<String>`.
   ///
-  /// If you need to store other types, please use the [PlainStow.new]
-  /// constructor with an explicit codec, such as [JsonCodec] or
-  /// [IdentityCodec].
+  /// See also:
+  /// - [PlainStow.json] for storing JSON-encodable values.
+  /// - [PlainStow.custom] for storing arbitrary values with a custom codec.
   PlainStow.simple(String key, Value defaultValue)
     : assert(key.isNotEmpty),
       assert(
@@ -38,6 +47,25 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       ),
       super(key, defaultValue, IdentityCodec<Value>());
 
+  /// Creates a [PlainStow] to store unencrypted json-encodable values
+  /// using shared preferences.
+  ///
+  /// The [Value] type must be JSON-encodable or you will get a runtime error.
+  ///
+  /// If [Value] is not a primitive json type, you can provide a [fromJson]
+  /// function that takes the output of [jsonDecode] and parses it into [Value]:
+  /// typically, this is a constructor like `Value.fromJson(json)`.
+  ///
+  /// See also:
+  /// - [PlainStow.simple] for storing simple values.
+  /// - [PlainStow.custom] for storing arbitrary values with a custom codec.
+  PlainStow.json(
+    String key,
+    Value defaultValue, {
+    Value Function(Object? json)? fromJson,
+  }) : assert(key.isNotEmpty),
+       super(key, defaultValue, TypedJsonCodec(fromJson: fromJson));
+
   @override
   Future<Value> protectedRead() async {
     final prefs = await SharedPreferences.getInstance();
@@ -49,7 +77,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       return codec!.decode(encodedValue);
     } catch (e) {
       // TODO(adil192): Handle decoding errors somehow
-      return defaultValue;
+      rethrow;
     }
   }
 
@@ -60,7 +88,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       encodedValue = codec!.encode(value);
     } catch (e) {
       // TODO(adil192): Handle encoding errors somehow
-      return;
+      rethrow;
     }
 
     final prefs = await SharedPreferences.getInstance();

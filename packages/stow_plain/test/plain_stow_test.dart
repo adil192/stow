@@ -57,14 +57,14 @@ void main() {
       expect(await stow2.protectedRead(), defaultValue);
     });
 
-    test('JsonCodec', () async {
+    test('json (primitive)', () async {
       final objectDecoded = {'key': 'value', 'number': 42};
       final objectEncoded = jsonEncode(objectDecoded);
       final arrayDecoded = ['item1', 'item2', 3.14, false];
       final arrayEncoded = jsonEncode(arrayDecoded);
 
-      final stowWithCodec = PlainStow('json_codec', const {}, JsonCodec());
-      final stowWithoutCodec = PlainStow.simple('json_codec', '{}');
+      final stowWithCodec = PlainStow<Object>.json('json', {});
+      final stowWithoutCodec = PlainStow.simple('json', '{}');
       await stowWithCodec.waitUntilRead();
       await stowWithoutCodec.waitUntilRead();
       expect(stowWithCodec.value, const {});
@@ -78,5 +78,38 @@ void main() {
       await stowWithoutCodec.waitUntilWritten();
       expect(await stowWithCodec.protectedRead(), arrayDecoded);
     });
+
+    test('json (non-primitive)', () async {
+      final wrapInt1 = _WrappedInteger(123);
+
+      final stow = PlainStow.json(
+        'wrap_int',
+        const _WrappedInteger(0),
+        fromJson: (json) => _WrappedInteger.fromJson(json as JsonMap),
+      );
+      await stow.waitUntilRead();
+
+      stow.value = wrapInt1;
+      await stow.waitUntilWritten();
+      expect(stow.value, wrapInt1);
+      expect(await stow.protectedRead(), wrapInt1);
+    });
   });
+}
+
+class _WrappedInteger {
+  const _WrappedInteger(this.value);
+
+  final int value;
+
+  _WrappedInteger.fromJson(JsonMap json) : value = json['value'] as int;
+  Map<String, dynamic> toJson() => {'value': value};
+
+  @override
+  bool operator ==(Object other) =>
+      other is _WrappedInteger && other.value == value;
+  @override
+  int get hashCode => value.hashCode;
+  @override
+  String toString() => 'WrappedInteger($value)';
 }
