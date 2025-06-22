@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ui' show Color;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stow_codecs/stow_codecs.dart';
 import 'package:stow_plain/stow_plain.dart';
 
 typedef JsonMap = Map<String, dynamic>;
@@ -93,6 +95,22 @@ void main() {
       await stow.waitUntilWritten();
       expect(stow.value, wrapInt1);
       expect(await stow.protectedRead(), wrapInt1);
+    });
+
+    test('color', () async {
+      final color = const Color(0xFF123456);
+
+      final stow = PlainStow(
+        'color',
+        const Color(0xFFFFFFFF),
+        const ColorCodec(),
+      );
+      await stow.waitUntilRead();
+
+      stow.value = color;
+      await stow.waitUntilWritten();
+      expect(stow.value, color);
+      expect(await stow.protectedRead(), color);
     });
   });
 }

@@ -10,7 +10,7 @@ class TypedJsonCodec<T> extends Codec<T, Object?> {
   ///
   /// If this function is not provided, the codec will simply return the
   /// decoded JSON object cast to [T].
-  final T Function(Object? json)? fromJson;
+  final T Function(Object json)? fromJson;
   final JsonCodec child;
 
   @override
@@ -22,7 +22,7 @@ class TypedJsonCodec<T> extends Codec<T, Object?> {
 class TypedJsonDecoder<T> extends Converter<Object?, T> {
   const TypedJsonDecoder(this.parser, this.child);
 
-  final T Function(Object? json)? parser;
+  final T Function(Object json)? parser;
   final JsonDecoder child;
 
   @override

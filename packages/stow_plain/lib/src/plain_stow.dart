@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stow/stow.dart';
@@ -16,7 +17,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// See also:
   /// - [PlainStow.simple] for storing simple values.
   /// - [PlainStow.json] for storing JSON-encodable values.
-  PlainStow.custom(super.key, super.defaultValue, super.codec)
+  PlainStow(super.key, super.defaultValue, super.codec)
     : assert(key.isNotEmpty),
       assert(
         codec != null,
@@ -32,7 +33,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   ///
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
-  /// - [PlainStow.custom] for storing arbitrary values with a custom codec.
+  /// - [PlainStow.new] for storing arbitrary values with a custom codec.
   PlainStow.simple(String key, Value defaultValue)
     : assert(key.isNotEmpty),
       assert(
@@ -58,11 +59,11 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   ///
   /// See also:
   /// - [PlainStow.simple] for storing simple values.
-  /// - [PlainStow.custom] for storing arbitrary values with a custom codec.
+  /// - [PlainStow.new] for storing arbitrary values with a custom codec.
   PlainStow.json(
     String key,
     Value defaultValue, {
-    Value Function(Object? json)? fromJson,
+    Value Function(Object json)? fromJson,
   }) : assert(key.isNotEmpty),
        super(key, defaultValue, TypedJsonCodec(fromJson: fromJson));
 
