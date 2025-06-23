@@ -1,6 +1,6 @@
 name: stow
 description: An abstraction to allow synchronous access to persistent data.
-version: 0.1.0
+version: 0.1.1
 resolution: workspace
 repository: https://github.com/adil192/stow
 
