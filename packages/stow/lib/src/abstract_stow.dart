@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mutex/mutex.dart';
 
+/// An abstract class that allows synchronous access to a value
+/// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     implements ValueNotifier<Value> {
   Stow(this.key, this.defaultValue, this.codec) {
@@ -12,13 +14,21 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     addListener(write);
   }
 
+  /// A unique identifier for this stow.
   final Key key;
+
+  /// The value to use if the underlying storage does not contain a value.
   final Value defaultValue;
+
+  /// A codec to encode and decode the value to/from the underlying storage.
+  /// If null, the value is assumed to be directly storable.
+  /// Some implementations of [Stow] may not use this codec at all.
   final Codec<Value, EncodedValue>? codec;
-  Value? _value;
 
   final _readMutex = Mutex();
   final _writeMutex = Mutex();
+
+  Value? _value;
 
   @override
   Value get value {
@@ -37,6 +47,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     notifyListeners();
   }
 
+  /// Sets [value] without calling [notifyListeners].
   @protected
   @visibleForTesting
   void setValueWithoutNotifying(Value value) {
