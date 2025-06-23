@@ -27,16 +27,20 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   /// This constructor automatically converts the numerical value to a string
   /// using [IntToStringCodec] before storing it.
   ///
-  /// The [codec] parameter should be a codec that converts the value to an
-  /// integer, such as [EnumCodec] or [ColorCodec].
-  /// If you want to store a simple integer, you can pass in the
-  /// [IdentityCodec] here or use an [IntToStringCodec] in [SecureStow.new].
+  /// If [Value] is not an integer, you must provide a codec that can convert
+  /// the value to an integer, e.g. [EnumCodec] or [ColorCodec].
   factory SecureStow.numerical(
     String key,
-    Value defaultValue,
-    Codec<Value, int?> codec,
-  ) {
-    final valueToStringCodec = codec.fuse(const IntToStringCodec());
+    Value defaultValue, [
+    Codec<Value, int?>? codec,
+  ]) {
+    assert(
+      Value == int || codec != null,
+      'SecureStow.numerical requires a codec for non-integer values.',
+    );
+    final valueToStringCodec =
+        codec?.fuse(const IntToStringCodec()) ??
+        (const IntToStringCodec() as Codec<Value, String?>);
     return SecureStow(key, defaultValue, valueToStringCodec);
   }
 
