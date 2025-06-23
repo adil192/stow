@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stow/stow.dart';
 import 'package:stow_codecs/stow_codecs.dart';
@@ -20,6 +21,16 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
         'SecureStow requires a codec for non-string values.',
       );
 
+  /// Creates a [SecureStow] to store encrypted numerical values
+  /// using [FlutterSecureStorage].
+  ///
+  /// This constructor automatically converts the numerical value to a string
+  /// using [IntToStringCodec] before storing it.
+  ///
+  /// The [codec] parameter should be a codec that converts the value to an
+  /// integer, such as [EnumCodec] or [ColorCodec].
+  /// If you want to store a simple integer, you can pass in the
+  /// [IdentityCodec] here or use an [IntToStringCodec] in [SecureStow.new].
   factory SecureStow.numerical(
     String key,
     Value defaultValue,
@@ -29,6 +40,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
     return SecureStow(key, defaultValue, valueToStringCodec);
   }
 
+  @visibleForTesting
   late final storage = FlutterSecureStorage();
 
   @override

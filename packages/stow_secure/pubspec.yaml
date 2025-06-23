@@ -16,13 +16,13 @@ environment:
   flutter: '>=3.27.0'
 
 dependencies:
+  flutter:
+    sdk: flutter
   flutter_secure_storage: ">=9.0.0 <11.0.0"
   stow: ^0.1.1
   stow_codecs: ^1.0.0
 
 dev_dependencies:
-  flutter:
-    sdk: flutter
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
