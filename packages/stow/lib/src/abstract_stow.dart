@@ -46,9 +46,8 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   @override
   void notifyListeners() => super.notifyListeners();
 
-  // TODO(adil192): Restrict access to [read] and [write] somehow. Package consumers shouldn't use them directly.
-
   /// Reads from the underlying storage and sets [value].
+  @visibleForTesting
   Future<void> read() => _readMutex.protect(() async {
     final newValue = await protectedRead();
     setValueWithoutNotifying(newValue);
@@ -62,6 +61,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// [setValueWithoutNotifying].
   /// Conversely, if you need to manually trigger a write,
   /// use [notifyListeners].
+  @visibleForTesting
   Future<void> write() => _writeMutex.protect(() async {
     await protectedWrite(value);
   });
