@@ -10,7 +10,7 @@ topics:
 
 environment:
   sdk: ^3.8.0
-  flutter: '>=3.0.0'
+  flutter: '>=3.27.0'
 
 dev_dependencies:
   flutter_lints: ^5.0.0

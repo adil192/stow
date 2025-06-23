@@ -13,7 +13,7 @@ topics:
 
 environment:
   sdk: ^3.8.0
-  flutter: '>=3.0.0'
+  flutter: '>=3.27.0'
 
 dependencies:
   flutter_secure_storage: ">=9.0.0 <11.0.0"
