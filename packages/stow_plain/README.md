@@ -15,9 +15,8 @@ Note that the values are stored as plaintext (not encrypted) and may be easily r
 Run the following in your flutter project:
 
 ```bash
-flutter pub add stow
-flutter pub add stow_codecs # (optional)
 flutter pub add stow_plain
+flutter pub add stow_codecs # (optional)
 ```
 
 And define the stows you want somewhere in your code:
