@@ -20,20 +20,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Column(
-            children: [
-              ValueListenableBuilder(
-                valueListenable: stows.count,
-                builder: (context, value, child) {
-                  return Text('Count: $value');
-                },
-              ),
-              ElevatedButton(
-                onPressed: () => stows.count.value++,
-                child: Text('Increment Count'),
-              ),
-            ],
+          child: ValueListenableBuilder(
+            valueListenable: stows.count,
+            builder: (context, value, child) {
+              return Text('Count: $value');
+            },
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => stows.count.value++,
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
         ),
       ),
     );
