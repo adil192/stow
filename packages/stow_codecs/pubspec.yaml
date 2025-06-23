@@ -2,10 +2,11 @@ name: stow_codecs
 description: A collection of codecs which can be used with Stow.
 version: 1.0.0
 resolution: workspace
+repository: https://github.com/adil192/stow
 
 environment:
   sdk: ^3.8.0
-  flutter: ^3.0.0
+  flutter: '>=3.0.0'
 
 dev_dependencies:
   flutter_lints: ^5.0.0
