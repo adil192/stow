@@ -34,7 +34,7 @@ class Stows {
       fromJson: (json) => GameState.fromJson(json as Map<String, dynamic>));
 
   final favoriteColor = PlainStow('favorite_color', Colors.blue,
-      codec: const ColorCodec());
+      codec: ColorCodec());
 
   final gameMode = PlainStow('game_mode', GameMode.easy,
       codec: GameMode.codec);
@@ -162,7 +162,7 @@ the value to and from a simple type that shared_preferences can handle.
 
 ```dart
   final favoriteColor = PlainStow('favorite_color', Colors.blue,
-      codec: const ColorCodec());
+      codec: ColorCodec());
 ```
 
 ## Codecs

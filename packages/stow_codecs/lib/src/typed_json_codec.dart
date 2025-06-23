@@ -2,8 +2,18 @@ import 'dart:convert';
 
 /// A codec that wraps the standard [JsonCodec] to loosen its type constraints.
 /// This allows us to use it with e.g. [PlainStow] more easily.
-class TypedJsonCodec<T> extends Codec<T, Object?> {
-  TypedJsonCodec({this.fromJson, this.child = const JsonCodec()});
+class TypedJsonCodec<T, Encoded extends Object?> extends Codec<T, Encoded> {
+  TypedJsonCodec({this.fromJson, this.child = const JsonCodec()})
+    : assert(
+        '' is Encoded ||
+            0 is Encoded ||
+            0.0 is Encoded ||
+            false is Encoded ||
+            null is Encoded ||
+            const {} is Encoded ||
+            const [] is Encoded,
+        'TypedJsonCodec\'s Encoded type must accept a JSON-encoded value.',
+      );
 
   /// Takes the output of [jsonDecode] and parses it into a type [T].
   /// Usually this uses a constructor like `T.fromJson(json)`.
@@ -14,12 +24,24 @@ class TypedJsonCodec<T> extends Codec<T, Object?> {
   final JsonCodec child;
 
   @override
-  TypedJsonDecoder<T> get decoder => TypedJsonDecoder(fromJson, child.decoder);
+  TypedJsonEncoder<T, Encoded> get encoder => TypedJsonEncoder(child.encoder);
   @override
-  TypedJsonEncoder<T> get encoder => TypedJsonEncoder(child.encoder);
+  TypedJsonDecoder<Encoded, T> get decoder =>
+      TypedJsonDecoder(fromJson, child.decoder);
 }
 
-class TypedJsonDecoder<T> extends Converter<Object?, T> {
+class TypedJsonEncoder<T, Encoded extends Object?>
+    extends Converter<T, Encoded> {
+  const TypedJsonEncoder(this.child);
+
+  final JsonEncoder child;
+
+  @override
+  Encoded convert(T input) => child.convert(input) as Encoded;
+}
+
+class TypedJsonDecoder<Encoded extends Object?, T>
+    extends Converter<Encoded, T> {
   const TypedJsonDecoder(this.parser, this.child);
 
   final T Function(Object json)? parser;
@@ -41,13 +63,4 @@ class TypedJsonDecoder<T> extends Converter<Object?, T> {
       return decoded as T;
     }
   }
-}
-
-class TypedJsonEncoder<T> extends Converter<T, Object?> {
-  const TypedJsonEncoder(this.child);
-
-  final JsonEncoder child;
-
-  @override
-  Object? convert(T input) => child.convert(input);
 }

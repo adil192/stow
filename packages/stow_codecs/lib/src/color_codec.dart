@@ -2,23 +2,24 @@ import 'dart:convert';
 import 'dart:ui' show Color;
 
 /// Encodes a [Color] as an ARGB32 integer.
-class ColorCodec extends Codec<Color, Object?> {
-  const ColorCodec();
+class ColorCodec<Encoded extends Object> extends Codec<Color, Encoded> {
+  ColorCodec()
+    : assert(0 is Encoded, 'ColorCodec\'s Encoded type must accept an integer');
 
   @override
-  final encoder = const _ColorEncoder();
+  final encoder = _ColorEncoder<Encoded>();
   @override
-  final decoder = const _ColorDecoder();
+  final decoder = _ColorDecoder<Encoded>();
 }
 
-class _ColorEncoder extends Converter<Color, Object?> {
+class _ColorEncoder<Encoded extends Object> extends Converter<Color, Encoded> {
   const _ColorEncoder();
 
   @override
-  int convert(Color color) => color.toARGB32();
+  Encoded convert(Color color) => color.toARGB32() as Encoded;
 }
 
-class _ColorDecoder extends Converter<Object?, Color> {
+class _ColorDecoder<Encoded extends Object> extends Converter<Encoded, Color> {
   const _ColorDecoder();
 
   @override

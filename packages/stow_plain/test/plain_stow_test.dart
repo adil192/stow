@@ -100,11 +100,7 @@ void main() {
     test('color', () async {
       final color = const Color(0xFF123456);
 
-      final stow = PlainStow(
-        'color',
-        const Color(0xFFFFFFFF),
-        const ColorCodec(),
-      );
+      final stow = PlainStow('color', const Color(0xFFFFFFFF), ColorCodec());
       await stow.waitUntilRead();
 
       stow.value = color;
