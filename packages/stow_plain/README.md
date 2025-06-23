@@ -20,7 +20,6 @@ flutter pub add stow_codecs # (optional)
 ```
 
 And define the stows you want somewhere in your code:
-(Don't worry, this is explained below in the [Stow definitions](#stow-definitions) section.)
 
 ```dart
 final stows = Stows();
@@ -78,7 +77,7 @@ stows.darkMode.removeListener(_someListenerFunction);
 
 ## Stow definitions
 
-You can define stows in any class/classes you want (they'll be loaded from disk when they're instantiated) but I like to organize them in a single class called `Stows` or similar.
+You can define stows in any class/classes you want (they'll be loaded from disk when they're instantiated) but I like to organize them in a single class called `Stows`.
 
 For each stow, you typically need to provide a key (used by [shared_preferences]) and a default value to be used when the value is unset.
 
