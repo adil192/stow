@@ -95,4 +95,9 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
 
   /// Waits until the write mutex is unlocked.
   Future<void> waitUntilWritten() => _writeMutex.protect(() async {});
+
+  @override
+  @mustBeOverridden
+  String toString() =>
+      'Stow<$Key, $Value, $EncodedValue>($key, $value, $codec)';
 }

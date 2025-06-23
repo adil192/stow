@@ -7,7 +7,7 @@ An abstraction to allow synchronous access to persistent data.
 
 This package isn't very useful on its own, but it is used by other packages like:
 - [stow_plain]: A Stow package to store plaintext data in shared preferences.
-- [stow_secure]: A Stow package to store encrypted data in secure storage (coming soon).
+- [stow_secure]: A Stow package to store encrypted data in secure storage.
 
 
 [stow]: https://pub.dev/packages/stow

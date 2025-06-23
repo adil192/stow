@@ -32,4 +32,7 @@ class MemoryStow<Value> extends Stow<String, Value, Value> {
     printOnFailure('MemoryStow: Writing value $value for key $key');
     _store[key] = value;
   }
+
+  @override
+  String toString() => 'MemoryStow<$Value>($key, $value)';
 }
