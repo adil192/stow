@@ -112,8 +112,20 @@ void main() {
       expect(stow.value, color);
       expect(await stow.protectedRead(), color);
     });
+
+    test('enum', () async {
+      final stow = PlainStow('pet', Pet.cat, EnumCodec(Pet.values));
+      await stow.waitUntilRead();
+
+      stow.value = Pet.dog;
+      await stow.waitUntilWritten();
+      expect(stow.value, Pet.dog);
+      expect(await stow.protectedRead(), Pet.dog);
+    });
   });
 }
+
+enum Pet { cat, dog, fish }
 
 class _WrappedInteger {
   const _WrappedInteger(this.value);

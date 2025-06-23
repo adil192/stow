@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui' show Color;
 
+/// Encodes a [Color] as an ARGB32 integer.
 class ColorCodec extends Codec<Color, Object?> {
   const ColorCodec();
 
