@@ -11,13 +11,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
- - There are no breaking changes in this release.
+ - [`stow_codecs` - `v1.1.0`](#stow_codecs---v110)
 
 Packages with other changes:
 
  - [`stow` - `v0.1.1`](#stow---v011)
+ - [`stow` - `v0.1.2`](#stow---v012)
  - [`stow_plain` - `v0.1.1`](#stow_plain---v011)
+ - [`stow_plain` - `v0.1.2`](#stow_plain---v012)
  - [`stow_secure` - `v0.1.0`](#stow_secure---v010)
+ - [`stow_secure` - `v0.1.1`](#stow_secure---v011)
+
+---
+
+#### `stow_codecs` - `v1.1.0`
+
+ - **FEAT**: add IntToStringCodec.
+ - **BREAKING** **REF**: codecs now have generic output types.
 
 ---
 
@@ -27,15 +37,33 @@ Packages with other changes:
 
 ---
 
+#### `stow` - `v0.1.2`
+
+ - **DOC**: Fix missing example on pub.dev
+
+---
+
 #### `stow_plain` - `v0.1.1`
 
  - **DOC**: Added more documentation, comments, and instructions
 
 ---
 
+#### `stow_plain` - `v0.1.2`
+
+ - **DOC**: Fix missing example on pub.dev
+
+---
+
 #### `stow_secure` - `v0.1.0`
 
  - **FEAT**: add stow_secure.
+
+---
+
+#### `stow_plain` - `v0.1.1`
+
+ - **DOC**: Added more documentation, comments, and instructions
 
 
 ## 2025-06-22

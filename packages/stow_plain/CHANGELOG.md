@@ -1,3 +1,7 @@
+## 0.1.2
+
+ - **DOC**: Fix missing example on pub.dev
+
 ## 0.1.1
 
  - **DOC**: Added more documentation, comments, and instructions
