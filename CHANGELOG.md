@@ -17,6 +17,7 @@ Packages with other changes:
 
  - [`stow` - `v0.1.1`](#stow---v011)
  - [`stow_plain` - `v0.1.1`](#stow_plain---v011)
+ - [`stow_secure` - `v0.1.0`](#stow_secure---v010)
 
 ---
 
@@ -29,6 +30,12 @@ Packages with other changes:
 #### `stow_plain` - `v0.1.1`
 
  - **DOC**: Added more documentation, comments, and instructions
+
+---
+
+#### `stow_secure` - `v0.1.0`
+
+ - **FEAT**: add stow_secure.
 
 
 ## 2025-06-22
