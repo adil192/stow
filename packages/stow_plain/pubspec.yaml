@@ -4,6 +4,12 @@ version: 0.1.0
 resolution: workspace
 repository: https://github.com/adil192/stow
 
+topics:
+  - stow
+  - storage
+  - shared-preferences
+  - persistence
+
 environment:
   sdk: ^3.8.0
   flutter: '>=3.0.0'

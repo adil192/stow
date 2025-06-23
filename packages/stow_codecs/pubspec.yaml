@@ -4,6 +4,10 @@ version: 1.0.0
 resolution: workspace
 repository: https://github.com/adil192/stow
 
+topics:
+  - stow
+  - codec
+
 environment:
   sdk: ^3.8.0
   flutter: '>=3.0.0'
