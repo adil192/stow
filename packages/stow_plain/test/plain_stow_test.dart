@@ -98,19 +98,16 @@ void main() {
     });
 
     test('color', () async {
-      final color = const Color(0xFF123456);
+      final white = const Color(0xFFFFFFFF);
+      final red = const Color(0xFFFF0000);
 
-      final stow = PlainStow(
-        'color',
-        const Color(0xFFFFFFFF),
-        codec: ColorCodec(),
-      );
+      final stow = PlainStow('color', white, codec: ColorCodec());
       await stow.waitUntilRead();
 
-      stow.value = color;
+      stow.value = red;
       await stow.waitUntilWritten();
-      expect(stow.value, color);
-      expect(await stow.protectedRead(), color);
+      expect(stow.value, red);
+      expect(await stow.protectedRead(), red);
     });
 
     test('enum', () async {
