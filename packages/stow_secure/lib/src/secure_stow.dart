@@ -14,7 +14,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   /// This constructor requires the codec to output Strings.
   /// If your codec of choice outputs integers, you can use
   /// [SecureStow.numerical] to automatically convert it to a string.
-  SecureStow(super.key, super.defaultValue, [super.codec])
+  SecureStow(super.key, super.defaultValue, {super.codec, super.autoRead})
     : assert(key.isNotEmpty),
       assert(
         Value == String || codec != null,
@@ -31,9 +31,10 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   /// the value to an integer, e.g. [EnumCodec] or [ColorCodec].
   factory SecureStow.numerical(
     String key,
-    Value defaultValue, [
+    Value defaultValue, {
     Codec<Value, int?>? codec,
-  ]) {
+    bool autoRead = true,
+  }) {
     assert(
       Value == int || codec != null,
       'SecureStow.numerical requires a codec for non-integer values.',
@@ -41,7 +42,12 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
     final valueToStringCodec =
         codec?.fuse(const IntToStringCodec()) ??
         (const IntToStringCodec() as Codec<Value, String?>);
-    return SecureStow(key, defaultValue, valueToStringCodec);
+    return SecureStow(
+      key,
+      defaultValue,
+      codec: valueToStringCodec,
+      autoRead: autoRead,
+    );
   }
 
   @visibleForTesting

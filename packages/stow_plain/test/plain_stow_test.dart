@@ -100,7 +100,11 @@ void main() {
     test('color', () async {
       final color = const Color(0xFF123456);
 
-      final stow = PlainStow('color', const Color(0xFFFFFFFF), ColorCodec());
+      final stow = PlainStow(
+        'color',
+        const Color(0xFFFFFFFF),
+        codec: ColorCodec(),
+      );
       await stow.waitUntilRead();
 
       stow.value = color;
@@ -110,7 +114,7 @@ void main() {
     });
 
     test('enum', () async {
-      final stow = PlainStow('pet', Pet.cat, EnumCodec(Pet.values));
+      final stow = PlainStow('pet', Pet.cat, codec: EnumCodec(Pet.values));
       await stow.waitUntilRead();
 
       stow.value = Pet.dog;

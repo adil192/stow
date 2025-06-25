@@ -26,7 +26,7 @@ void main() {
       final stow = SecureStow(
         'string_with_codec',
         defaultValue,
-        IdentityCodec(),
+        codec: IdentityCodec(),
       );
       await stow.waitUntilRead();
       expect(stow.value, defaultValue);
@@ -43,7 +43,7 @@ void main() {
       final stow = SecureStow.numerical(
         'numerical',
         defaultValue,
-        IdentityCodec(),
+        codec: IdentityCodec(),
       );
       await stow.waitUntilRead();
       expect(stow.value, defaultValue);

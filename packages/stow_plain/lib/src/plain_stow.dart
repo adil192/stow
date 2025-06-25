@@ -17,7 +17,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// See also:
   /// - [PlainStow.simple] for storing simple values.
   /// - [PlainStow.json] for storing JSON-encodable values.
-  PlainStow(super.key, super.defaultValue, super.codec)
+  PlainStow(super.key, super.defaultValue, {super.codec, super.autoRead})
     : assert(key.isNotEmpty),
       assert(
         codec != null,
@@ -34,7 +34,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
   /// - [PlainStow.new] for storing arbitrary values with a custom codec.
-  PlainStow.simple(String key, Value defaultValue)
+  PlainStow.simple(String key, Value defaultValue, {super.autoRead})
     : assert(key.isNotEmpty),
       assert(
         // This is the best we can do to assert simple types, but some edge
@@ -46,7 +46,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
             <String>[] is Value,
         'PlainStow.simple only supports int, bool, double, String, List<String>.',
       ),
-      super(key, defaultValue, IdentityCodec<Value>());
+      super(key, defaultValue, codec: IdentityCodec<Value>());
 
   /// Creates a [PlainStow] to store unencrypted json-encodable values
   /// using shared preferences.
@@ -64,8 +64,9 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     String key,
     Value defaultValue, {
     Value Function(Object json)? fromJson,
+    bool autoRead = true,
   }) : assert(key.isNotEmpty),
-       super(key, defaultValue, TypedJsonCodec(fromJson: fromJson));
+       super(key, defaultValue, codec:  TypedJsonCodec(fromJson: fromJson));
 
   @override
   Future<Value> protectedRead() async {

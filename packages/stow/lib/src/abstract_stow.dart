@@ -9,8 +9,8 @@ import 'package:mutex/mutex.dart';
 /// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     implements ValueNotifier<Value> {
-  Stow(this.key, this.defaultValue, this.codec) {
-    unawaited(read());
+  Stow(this.key, this.defaultValue, {this.codec, bool autoRead = true}) {
+    if (autoRead) unawaited(read());
     addListener(write);
   }
 

@@ -6,8 +6,8 @@ import 'package:stow_codecs/stow_codecs.dart';
 /// A reference implementation of [Stow] that stores values in a dictionary
 /// in memory.
 class MemoryStow<Value> extends Stow<String, Value, Value> {
-  MemoryStow(String key, Value defaultValue)
-    : super(key, defaultValue, IdentityCodec<Value>());
+  MemoryStow(super.key, super.defaultValue, {super.autoRead})
+    : super(codec: IdentityCodec<Value>());
 
   static final _store = <String, dynamic>{};
 
