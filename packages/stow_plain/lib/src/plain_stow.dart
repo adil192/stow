@@ -11,14 +11,19 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// Creates a [PlainStow] to store unencrypted values
   /// using shared preferences.
   ///
-  /// This constructor supports any codec but is more verbose than the
-  /// other constructors.
+  /// The [codec] must not be null, unless your [Value] type is one of the
+  /// simple types that are directly supported by shared_preferences:
+  /// `int`, `bool`, `double`, `String`, or `List<String>`.
   ///
   /// See also:
-  /// - [PlainStow.simple] for storing simple values.
   /// - [PlainStow.json] for storing JSON-encodable values.
   PlainStow(super.key, super.defaultValue, {super.codec, super.autoRead})
-    : assert(key.isNotEmpty);
+    : assert(key.isNotEmpty),
+      assert(
+        codec != null || isSimpleType<Value>(),
+        'Without a codec, only simple types are supported: '
+        'int, bool, double, String, List<String>.',
+      );
 
   /// Creates a [PlainStow] to store unencrypted simple values
   /// using shared preferences.
@@ -30,18 +35,22 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
   /// - [PlainStow.new] for storing arbitrary values with a custom codec.
+  @Deprecated('Use PlainStow.new instead with a null codec')
   PlainStow.simple(super.key, super.defaultValue, {super.autoRead})
     : assert(key.isNotEmpty),
       assert(
-        // This is the best we can do to assert simple types, but some edge
-        // cases fall through. They will still fail at runtime.
-        0 is Value ||
-            false is Value ||
-            0.0 is Value ||
-            '' is Value ||
-            <String>[] is Value,
+        isSimpleType<Value>(),
         'PlainStow.simple only supports int, bool, double, String, List<String>.',
       );
+
+  /// This is the best we can do to assert simple types, but some edge
+  /// cases fall through. They will still fail at runtime.
+  static bool isSimpleType<Value>() =>
+      0 is Value ||
+      false is Value ||
+      0.0 is Value ||
+      '' is Value ||
+      <String>[] is Value;
 
   /// Creates a [PlainStow] to store unencrypted json-encodable values
   /// using shared preferences.
@@ -53,8 +62,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// typically, this is a constructor like `Value.fromJson(json)`.
   ///
   /// See also:
-  /// - [PlainStow.simple] for storing simple values.
-  /// - [PlainStow.new] for storing arbitrary values with a custom codec.
+  /// - [PlainStow.new] for storing non-json values.
   PlainStow.json(
     super.key,
     super.defaultValue, {

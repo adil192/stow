@@ -26,8 +26,8 @@ final stows = Stows();
 
 // Don't worry, this is explained below in the Stow definitions section.
 class Stows {
-  final count = PlainStow.simple('count', 0);
-  final darkMode = PlainStow.simple('dark_mode', false);
+  final count = PlainStow('count', 0);
+  final darkMode = PlainStow('dark_mode', false);
 
   final gameState = PlainStow.json('game_state', GameState.empty(),
       fromJson: (json) => GameState.fromJson(json as Map<String, dynamic>));
@@ -87,15 +87,15 @@ or codec.
 
 ### Simple types
 
-For types already supported by [shared_preferences] (int, bool, double, String, List\<String\>), you can use the `PlainStow.simple` constructor.
+For types already supported by [shared_preferences] (int, bool, double, String, List\<String\>), you can use the normal `PlainStow` constructor without needing a codec.
 
 ```dart
-  final count = PlainStow.simple('count', 0);
-  final darkMode = PlainStow.simple('dark_mode', false);
-  final highScore = PlainStow.simple('high_score', 0.0);
-  final lastName = PlainStow.simple('last_name', '');
+  final count = PlainStow.'count', 0);
+  final darkMode = PlainStow.'dark_mode', false);
+  final highScore = PlainStow.'high_score', 0.0);
+  final lastName = PlainStow.'last_name', '');
   // If needed, you can specify the type explicitly like this:
-  final foreNames = PlainStow<List<String>>.simple('forenames', []);
+  final foreNames = PlainStow<List<String>>('forenames', []);
 ```
 
 ### JSON primitive values
@@ -175,7 +175,7 @@ but they're easy to write yourself.
 Some of the codecs provided are:
 - `ColorCodec` which encodes a `Color` as an integer.
 - `EnumCodec` which encodes an enum value as its index.
-- `IdentityCodec` which just returns its input as-is (used internally by `PlainStow.simple`).
+- `IdentityCodec` which just returns its input as-is (typically we just pass `null` for the codec instead).
 - `TypedJsonCodec` which `jsonEncode`s a value (used internally by `PlainStow.json`).
 
 See

@@ -4,7 +4,7 @@ import 'package:stow_plain/stow_plain.dart';
 final stows = Stows();
 
 class Stows {
-  final count = PlainStow.simple('count', 0);
+  final count = PlainStow('count', 0);
   // ... add more stows as needed
 }
 

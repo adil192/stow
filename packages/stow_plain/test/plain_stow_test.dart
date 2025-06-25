@@ -16,7 +16,7 @@ void main() {
     SharedPreferences.setMockInitialValues({'existing': existingValue});
 
     test('Read when not present', () async {
-      final stow = PlainStow.simple('missing', defaultValue);
+      final stow = PlainStow('missing', defaultValue);
 
       await stow.waitUntilRead();
       expect(stow.value, defaultValue);
@@ -25,7 +25,7 @@ void main() {
     });
 
     test('Read when present', () async {
-      final stow = PlainStow.simple('existing', defaultValue);
+      final stow = PlainStow('existing', defaultValue);
 
       await stow.waitUntilRead();
       expect(stow.value, existingValue);
@@ -34,7 +34,7 @@ void main() {
     });
 
     test('Write', () async {
-      final stow = PlainStow.simple('write', defaultValue);
+      final stow = PlainStow('write', defaultValue);
       await stow.waitUntilRead();
 
       stow.value = newValue;
@@ -45,8 +45,8 @@ void main() {
     });
 
     test('Key is case-sensitive', () async {
-      final stow1 = PlainStow.simple('key', defaultValue);
-      final stow2 = PlainStow.simple('KEY', defaultValue);
+      final stow1 = PlainStow('key', defaultValue);
+      final stow2 = PlainStow('KEY', defaultValue);
       await stow1.waitUntilRead();
       await stow2.waitUntilRead();
 
@@ -66,7 +66,7 @@ void main() {
       final arrayEncoded = jsonEncode(arrayDecoded);
 
       final stowWithCodec = PlainStow<Object>.json('json', {});
-      final stowWithoutCodec = PlainStow.simple('json', '{}');
+      final stowWithoutCodec = PlainStow('json', '{}');
       await stowWithCodec.waitUntilRead();
       await stowWithoutCodec.waitUntilRead();
       expect(stowWithCodec.value, const {});
