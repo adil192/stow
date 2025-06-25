@@ -85,3 +85,10 @@ or codec:
 ## More information
 
 Codecs and stow definitions are explained in more detail in the [stow_plain](https://pub.dev/packages/stow_plain) package documentation.
+
+
+[stow]: https://pub.dev/packages/stow
+[license]: https://github.com/adil192/stow/blob/main/LICENSE
+[stow_plain]: https://pub.dev/packages/stow_plain
+[stow_secure]: https://pub.dev/packages/stow_secure
+[flutter_secure_storage]: https://pub.dev/packages/flutter_secure_storage
