@@ -1,3 +1,7 @@
+## 1.1.1
+
+ - **FIX**: pub.dev complaining about no flutter dependency for stow_codecs.
+
 ## 1.1.0
 
 > Note: This release has breaking changes.

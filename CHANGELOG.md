@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-06-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`stow` - `v0.2.0`](#stow---v020)
+ - [`stow_plain` - `v0.2.0`](#stow_plain---v020)
+ - [`stow_secure` - `v0.2.0`](#stow_secure---v020)
+
+Packages with other changes:
+
+ - [`stow_codecs` - `v1.1.1`](#stow_codecs---v111)
+
+---
+
+#### `stow` - `v0.2.0`
+
+ - **BREAKING** **FEAT**: add autoRead flag to disable read() on init, and make codec a named param.
+
+#### `stow_plain` - `v0.2.0`
+
+ - **BREAKING** **TWEAK**: delete from storage if default value.
+ - **BREAKING** **REF**: use `PlainStow()` instead of `PlainStow.simple()`.
+ - **BREAKING** **FEAT**: add autoRead flag to disable read() on init, and make codec a named param.
+
+#### `stow_secure` - `v0.2.0`
+
+ - **BREAKING** **TWEAK**: delete from storage if default value.
+ - **BREAKING** **FEAT**: add autoRead flag to disable read() on init, and make codec a named param.
+
+#### `stow_codecs` - `v1.1.1`
+
+ - **FIX**: pub.dev complaining about no flutter dependency for stow_codecs.
+
+
 ## 2025-06-23
 
 ### Changes

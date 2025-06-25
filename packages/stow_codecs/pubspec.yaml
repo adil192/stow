@@ -1,6 +1,6 @@
 name: stow_codecs
 description: A collection of codecs which can be used with Stow.
-version: 1.1.0
+version: 1.1.1
 resolution: workspace
 repository: https://github.com/adil192/stow
 

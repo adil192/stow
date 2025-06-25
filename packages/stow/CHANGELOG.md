@@ -1,3 +1,9 @@
+## 0.2.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: add autoRead flag to disable read() on init, and make codec a named param.
+
 ## 0.1.2
 
  - **DOC**: Fix missing example on pub.dev
