@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stow/stow.dart';
-import 'package:stow_codecs/stow_codecs.dart';
 
 /// A reference implementation of [Stow] that stores values in a dictionary
 /// in memory.
 class MemoryStow<Value> extends Stow<String, Value, Value> {
-  MemoryStow(super.key, super.defaultValue, {super.autoRead})
-    : super(codec: IdentityCodec<Value>());
+  MemoryStow(super.key, super.defaultValue, {super.autoRead});
 
   static final _store = <String, dynamic>{};
 

@@ -18,11 +18,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// - [PlainStow.simple] for storing simple values.
   /// - [PlainStow.json] for storing JSON-encodable values.
   PlainStow(super.key, super.defaultValue, {super.codec, super.autoRead})
-    : assert(key.isNotEmpty),
-      assert(
-        codec != null,
-        'PlainStow requires a codec to encode and decode values.',
-      );
+    : assert(key.isNotEmpty);
 
   /// Creates a [PlainStow] to store unencrypted simple values
   /// using shared preferences.
@@ -34,7 +30,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
   /// - [PlainStow.new] for storing arbitrary values with a custom codec.
-  PlainStow.simple(String key, Value defaultValue, {super.autoRead})
+  PlainStow.simple(super.key, super.defaultValue, {super.autoRead})
     : assert(key.isNotEmpty),
       assert(
         // This is the best we can do to assert simple types, but some edge
@@ -45,8 +41,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
             '' is Value ||
             <String>[] is Value,
         'PlainStow.simple only supports int, bool, double, String, List<String>.',
-      ),
-      super(key, defaultValue, codec: IdentityCodec<Value>());
+      );
 
   /// Creates a [PlainStow] to store unencrypted json-encodable values
   /// using shared preferences.
@@ -61,12 +56,12 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// - [PlainStow.simple] for storing simple values.
   /// - [PlainStow.new] for storing arbitrary values with a custom codec.
   PlainStow.json(
-    String key,
-    Value defaultValue, {
+    super.key,
+    super.defaultValue, {
     Value Function(Object json)? fromJson,
     bool autoRead = true,
   }) : assert(key.isNotEmpty),
-       super(key, defaultValue, codec:  TypedJsonCodec(fromJson: fromJson));
+       super(codec: TypedJsonCodec(fromJson: fromJson));
 
   @override
   Future<Value> protectedRead() async {
@@ -75,23 +70,12 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     final encodedValue = prefs.get(key);
     if (encodedValue == null) return defaultValue;
 
-    try {
-      return codec!.decode(encodedValue);
-    } catch (e) {
-      // TODO(adil192): Handle decoding errors somehow
-      rethrow;
-    }
+    return codec == null ? encodedValue as Value : codec!.decode(encodedValue);
   }
 
   @override
   Future<void> protectedWrite(Value value) async {
-    final Object? encodedValue;
-    try {
-      encodedValue = codec!.encode(value);
-    } catch (e) {
-      // TODO(adil192): Handle encoding errors somehow
-      rethrow;
-    }
+    final encodedValue = codec == null ? value : codec!.encode(value);
 
     final prefs = await SharedPreferences.getInstance();
     if (encodedValue == null) {
