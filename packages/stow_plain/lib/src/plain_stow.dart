@@ -86,7 +86,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     final encodedValue = codec == null ? value : codec!.encode(value);
 
     final prefs = await SharedPreferences.getInstance();
-    if (encodedValue == null) {
+    if (encodedValue == null || value == defaultValue) {
       await prefs.remove(key);
     } else if (encodedValue is int) {
       await prefs.setInt(key, encodedValue);
