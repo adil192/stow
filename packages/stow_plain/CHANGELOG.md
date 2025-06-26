@@ -1,3 +1,7 @@
+## 0.2.1+2
+
+ - **FIX**: cast error with string lists.
+
 ## 0.2.1+1
 
  - Update a dependency to the latest release.

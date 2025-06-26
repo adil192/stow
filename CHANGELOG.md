@@ -11,6 +11,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`stow_plain` - `v0.2.1+2`](#stow_plain---v0212)
+
+---
+
+#### `stow_plain` - `v0.2.1+2`
+
+ - **FIX**: cast error with string lists.
+
+
+## 2025-06-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`stow_secure` - `v0.3.0`](#stow_secure---v030)
 
 Packages with other changes:
