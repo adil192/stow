@@ -12,8 +12,8 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   /// using [FlutterSecureStorage].
   ///
   /// This constructor requires the codec to output Strings.
-  /// If your codec of choice outputs integers, you can use
-  /// [SecureStow.numerical] to automatically convert it to a string.
+  /// If your codec of choice outputs something else, consider using:
+  /// - [SecureStow.int] for integers
   SecureStow(super.key, super.defaultValue, {super.codec, super.autoRead})
     : assert(key.isNotEmpty),
       assert(
@@ -21,15 +21,15 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
         'SecureStow requires a codec for non-string values.',
       );
 
-  /// Creates a [SecureStow] to store encrypted numerical values
+  /// Creates a [SecureStow] to store encrypted integer values
   /// using [FlutterSecureStorage].
   ///
-  /// This constructor automatically converts the numerical value to a string
+  /// This constructor automatically converts the integer value to a string
   /// using [IntToStringCodec] before storing it.
   ///
   /// If [Value] is not an integer, you must provide a codec that can convert
   /// the value to an integer, e.g. [EnumCodec] or [ColorCodec].
-  factory SecureStow.numerical(
+  factory SecureStow.int(
     String key,
     Value defaultValue, {
     Codec<Value, int?>? codec,
@@ -37,7 +37,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   }) {
     assert(
       Value == int || codec != null,
-      'SecureStow.numerical requires a codec for non-integer values.',
+      'SecureStow.int requires a codec for non-integer values.',
     );
     final valueToStringCodec =
         codec?.fuse(const IntToStringCodec()) ??
@@ -49,6 +49,22 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
       autoRead: autoRead,
     );
   }
+
+  /// Creates a [SecureStow] to store encrypted integer values
+  /// using [FlutterSecureStorage].
+  ///
+  /// This constructor automatically converts the integer value to a string
+  /// using [IntToStringCodec] before storing it.
+  ///
+  /// If [Value] is not an integer, you must provide a codec that can convert
+  /// the value to an integer, e.g. [EnumCodec] or [ColorCodec].
+  @Deprecated('Use SecureStow.int instead.')
+  factory SecureStow.numerical(
+    String key,
+    Value defaultValue, {
+    Codec<Value, int?>? codec,
+    bool autoRead,
+  }) = SecureStow.int;
 
   @visibleForTesting
   late final storage = FlutterSecureStorage();

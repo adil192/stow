@@ -4,7 +4,7 @@ import 'package:stow_secure/stow_secure.dart';
 final stows = Stows();
 
 class Stows {
-  final count = SecureStow.numerical('count', 0);
+  final count = SecureStow.int('count', 0);
   // ... add more stows as needed
 }
 

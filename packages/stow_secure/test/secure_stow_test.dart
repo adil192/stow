@@ -37,11 +37,11 @@ void main() {
       expect(await stow.protectedRead(), newValue);
     });
 
-    test('numerical', () async {
+    test('int', () async {
       const defaultValue = 1;
       const newValue = 2;
-      final stow = SecureStow.numerical(
-        'numerical',
+      final stow = SecureStow.int(
+        'int',
         defaultValue,
         codec: IdentityCodec(),
       );

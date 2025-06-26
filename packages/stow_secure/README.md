@@ -77,10 +77,10 @@ For each stow, you typically need to provide a key (used by [flutter_secure_stor
 For the SecureStow to know how to encode your data, you need to use the corresponding constructor
 or codec:
 - For string values, you can just use e.g. `SecureStow('key', 'some_default_value')`.
-- For integer values, you can use `SecureStow.numerical('key', 0)`.
+- For integer values, you can use `SecureStow.int('key', 0)`.
 - For other values, find or make a codec that converts your data to a string/integer and use the relevant constructor e.g.:
   - `SecureStow('key', 'default', ValueToStringCodec())`
-  - `SecureStow.numerical('key', 0, ColorCodec())`
+  - `SecureStow.int('key', 0, ColorCodec())`
 
 ## More information
 
