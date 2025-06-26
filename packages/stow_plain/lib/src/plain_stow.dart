@@ -94,9 +94,15 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     }
   }
 
+  Object? _encode(Value value) {
+    if (codec == null) return value;
+    if (value == null) return null;
+    return codec!.encode(value);
+  }
+
   @override
   Future<void> protectedWrite(Value value) async {
-    final encodedValue = codec == null ? value : codec!.encode(value);
+    final encodedValue = _encode(value);
 
     final prefs = await SharedPreferences.getInstance();
     if (encodedValue == null || value == defaultValue) {

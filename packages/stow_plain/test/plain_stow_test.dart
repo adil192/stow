@@ -127,6 +127,23 @@ void main() {
       expect(await stow.protectedRead(), red);
     });
 
+    test('color? (null value)', () async {
+      final red = const Color(0xFFFF0000);
+
+      final stow = PlainStow<Color?>('color', null, codec: ColorCodec());
+      await stow.waitUntilRead();
+
+      stow.value = red;
+      await stow.waitUntilWritten();
+      expect(stow.value, red);
+      expect(await stow.protectedRead(), red);
+
+      stow.value = null;
+      await stow.waitUntilWritten();
+      expect(stow.value, null);
+      expect(await stow.protectedRead(), null);
+    });
+
     test('enum', () async {
       final stow = PlainStow('pet', Pet.cat, codec: EnumCodec(Pet.values));
       await stow.waitUntilRead();
