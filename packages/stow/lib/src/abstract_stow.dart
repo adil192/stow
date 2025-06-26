@@ -28,6 +28,12 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// Whether [read] has been run at least once.
   bool get loaded => _loaded;
   bool _loaded = false;
+  @visibleForTesting
+  set loaded(bool loaded) {
+    if (_loaded == loaded) return;
+    _loaded = loaded;
+    notifyListeners();
+  }
 
   final _readMutex = Mutex();
   final _writeMutex = Mutex();
