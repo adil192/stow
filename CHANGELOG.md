@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-06-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`stow` - `v0.3.0`](#stow---v030)
+
+Packages with other changes:
+
+ - [`stow_plain` - `v0.2.0+1`](#stow_plain---v0201)
+ - [`stow_secure` - `v0.2.0+1`](#stow_secure---v0201)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `stow_plain` - `v0.2.0+1`
+ - `stow_secure` - `v0.2.0+1`
+
+---
+
+#### `stow` - `v0.3.0`
+
+ - **FEAT**: add Stow.isReading and Stow.isWriting.
+ - **FEAT**: add Stow.loaded getter.
+ - **BREAKING** **TWEAK**: don't throw if value is unset, just return defaultValue.
+
+
 ## 2025-06-25
 
 ### Changes

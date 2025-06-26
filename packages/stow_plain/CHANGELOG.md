@@ -1,3 +1,11 @@
+## 0.2.0+1
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add Stow.isReading and Stow.isWriting.
+ - **FEAT**: add Stow.loaded getter.
+ - **BREAKING** **TWEAK**: don't throw if value is unset, just return defaultValue.
+
 ## 0.2.0
 
 > Note: This release has breaking changes.
