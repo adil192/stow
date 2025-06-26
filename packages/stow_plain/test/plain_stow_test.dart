@@ -3,6 +3,7 @@ import 'dart:ui' show Color;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 import 'package:stow_codecs/stow_codecs.dart';
 import 'package:stow_plain/stow_plain.dart';
 
@@ -13,7 +14,12 @@ void main() {
     const defaultValue = 'default_value';
     const newValue = 'new_value';
     const existingValue = 'existing_value';
-    SharedPreferences.setMockInitialValues({'existing': existingValue});
+    SharedPreferences.setMockInitialValues({
+      'existing': existingValue,
+
+      // shared_preferences casts from dynamic to string because of platform differences
+      'existing_list': List<dynamic>.from([existingValue]),
+    });
 
     test('Read when not present', () async {
       final stow = PlainStow('missing', defaultValue);
@@ -57,6 +63,18 @@ void main() {
       expect(await stow1.protectedRead(), newValue);
       expect(stow2.value, defaultValue);
       expect(await stow2.protectedRead(), defaultValue);
+    });
+
+    test('List<String>', () async {
+      final stow = PlainStow<List<String>>('existing_list', []);
+      await stow.waitUntilRead();
+      expect(stow.value, [existingValue]);
+
+      final list = ['item1', 'item2', 'item3'];
+      stow.value = list;
+      await stow.waitUntilWritten();
+      expect(stow.value, list);
+      expect(await stow.protectedRead(), list);
     });
 
     test('json (primitive)', () async {

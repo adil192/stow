@@ -79,11 +79,19 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     final encodedValue = prefs.get(key);
     if (encodedValue == null) return defaultValue;
 
-    if (Value == _typeOf<Set<String>>() && codec == null) {
-      return (encodedValue as List<String>).toSet() as Value;
-    }
+    final decodedValue = codec == null
+        ? encodedValue
+        : codec!.decode(encodedValue);
 
-    return codec == null ? encodedValue as Value : codec!.decode(encodedValue);
+    if (Value == _typeOf<Set<String>>()) {
+      // Convert List<dynamic> to Set<String>
+      return (decodedValue as List<dynamic>).cast<String>().toSet() as Value;
+    } else if (Value == _typeOf<List<String>>()) {
+      // Convert List<dynamic> to List<String>
+      return (decodedValue as List<dynamic>).cast<String>() as Value;
+    } else {
+      return decodedValue as Value;
+    }
   }
 
   @override
