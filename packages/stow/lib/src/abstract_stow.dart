@@ -9,8 +9,8 @@ import 'package:mutex/mutex.dart';
 /// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     implements ValueNotifier<Value> {
-  Stow(this.key, this.defaultValue, {this.codec, bool autoRead = true}) {
-    if (autoRead) unawaited(read());
+  Stow(this.key, this.defaultValue, {this.codec, this.volatile = false}) {
+    unawaited(read());
     addListener(write);
   }
 
@@ -24,6 +24,13 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// If null, the value is assumed to be directly storable.
   /// Some implementations of [Stow] may not use this codec at all.
   final Codec<Value, EncodedValue>? codec;
+
+  /// If [volatile] is true, [read] and [write] will be disabled
+  /// meaning nothing gets stored or read.
+  ///
+  /// This is useful in testing environments or to avoid platform channel
+  /// issues with secondary isolates.
+  final bool volatile;
 
   /// Whether [read] has been run at least once.
   bool get loaded => _loaded;
@@ -62,6 +69,11 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// Reads from the underlying storage and sets [value].
   @visibleForTesting
   Future<void> read() => _readMutex.protect(() async {
+    if (volatile) {
+      loaded = true;
+      return;
+    }
+
     final newValue = await protectedRead();
     _loaded = true;
     value = newValue;
@@ -76,6 +88,8 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// use [notifyListeners].
   @visibleForTesting
   Future<void> write() => _writeMutex.protect(() async {
+    if (volatile) return;
+
     await protectedWrite(value);
   });
 

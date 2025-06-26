@@ -5,7 +5,7 @@ import 'package:stow/stow.dart';
 /// A reference implementation of [Stow] that stores values in a dictionary
 /// in memory.
 class MemoryStow<Value> extends Stow<String, Value, Value> {
-  MemoryStow(super.key, super.defaultValue, {super.autoRead});
+  MemoryStow(super.key, super.defaultValue, {super.volatile});
 
   static final _store = <String, dynamic>{};
 

@@ -17,7 +17,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   ///
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
-  PlainStow(super.key, super.defaultValue, {super.codec, super.autoRead})
+  PlainStow(super.key, super.defaultValue, {super.codec, super.volatile})
     : assert(key.isNotEmpty),
       assert(
         codec != null || isSimpleType<Value>(),
@@ -36,7 +36,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// - [PlainStow.json] for storing JSON-encodable values.
   /// - [PlainStow.new] for storing arbitrary values with a custom codec.
   @Deprecated('Use PlainStow.new instead with a null codec')
-  PlainStow.simple(super.key, super.defaultValue, {super.autoRead})
+  PlainStow.simple(super.key, super.defaultValue, {super.volatile})
     : assert(key.isNotEmpty),
       assert(
         isSimpleType<Value>(),
@@ -68,7 +68,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     super.key,
     super.defaultValue, {
     Value Function(Object json)? fromJson,
-    bool autoRead = true,
+    super.volatile,
   }) : assert(key.isNotEmpty),
        super(codec: TypedJsonCodec(fromJson: fromJson));
 

@@ -15,7 +15,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   /// If your codec of choice outputs something else, consider using:
   /// - [SecureStow.int] for integers
   /// - [SecureStow.bool] for booleans
-  SecureStow(super.key, super.defaultValue, {super.codec, super.autoRead})
+  SecureStow(super.key, super.defaultValue, {super.codec, super.volatile})
     : assert(key.isNotEmpty),
       assert(
         Value == String || codec != null,
@@ -34,7 +34,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
     String key,
     Value defaultValue, {
     Codec<Value, int?>? codec,
-    bool autoRead = true,
+    bool volatile = false,
   }) {
     assert(
       Value == int || codec != null,
@@ -47,7 +47,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
       key,
       defaultValue,
       codec: valueToStringCodec,
-      autoRead: autoRead,
+      volatile: volatile,
     );
   }
 
@@ -63,7 +63,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
     String key,
     Value defaultValue, {
     Codec<Value, bool?>? codec,
-    bool autoRead = true,
+    bool volatile = false,
   }) {
     assert(
       Value == bool || codec != null,
@@ -76,7 +76,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
       key,
       defaultValue,
       codec: valueToStringCodec,
-      autoRead: autoRead,
+      volatile: volatile,
     );
   }
 
@@ -93,7 +93,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
     String key,
     Value defaultValue, {
     Codec<Value, int?>? codec,
-    bool autoRead,
+    bool volatile,
   }) = SecureStow.int;
 
   @visibleForTesting
