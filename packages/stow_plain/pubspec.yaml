@@ -1,6 +1,6 @@
 name: stow_plain
 description: A Stow package to store plaintext data in shared preferences.
-version: 0.2.1+2
+version: 0.2.1+3
 resolution: workspace
 repository: https://github.com/adil192/stow
 

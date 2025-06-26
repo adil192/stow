@@ -1,3 +1,8 @@
+## 0.2.1+3
+
+ - **FIX**: codecs don't need nullable args.
+   As a side effect, codecs can no longer remap null values.
+
 ## 0.2.1+2
 
  - **FIX**: cast error with string lists.
