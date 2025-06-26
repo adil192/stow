@@ -14,6 +14,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   /// This constructor requires the codec to output Strings.
   /// If your codec of choice outputs something else, consider using:
   /// - [SecureStow.int] for integers
+  /// - [SecureStow.bool] for booleans
   SecureStow(super.key, super.defaultValue, {super.codec, super.autoRead})
     : assert(key.isNotEmpty),
       assert(
@@ -42,6 +43,35 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
     final valueToStringCodec =
         codec?.fuse(const IntToStringCodec()) ??
         (const IntToStringCodec() as Codec<Value, String?>);
+    return SecureStow(
+      key,
+      defaultValue,
+      codec: valueToStringCodec,
+      autoRead: autoRead,
+    );
+  }
+
+  /// Creates a [SecureStow] to store encrypted boolean values
+  /// using [FlutterSecureStorage].
+  ///
+  /// This constructor automatically converts the boolean value to a string
+  /// using [BoolToStringCodec] before storing it.
+  ///
+  /// If [Value] is not a boolean, you must provide a codec that can convert
+  /// the value to a boolean.
+  factory SecureStow.bool(
+    String key,
+    Value defaultValue, {
+    Codec<Value, bool?>? codec,
+    bool autoRead = true,
+  }) {
+    assert(
+      Value == bool || codec != null,
+      'SecureStow.bool requires a codec for non-boolean values.',
+    );
+    final valueToStringCodec =
+        codec?.fuse(const BoolToStringCodec()) ??
+        (const BoolToStringCodec() as Codec<Value, String?>);
     return SecureStow(
       key,
       defaultValue,
