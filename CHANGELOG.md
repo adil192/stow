@@ -11,6 +11,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`stow_plain` - `v0.2.1`](#stow_plain---v021)
+
+---
+
+#### `stow_plain` - `v0.2.1`
+
+ - **FEAT**: support Set<String> without codec.
+
+
+## 2025-06-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`stow` - `v0.3.0`](#stow---v030)
 
 Packages with other changes:

@@ -1,3 +1,7 @@
+## 0.2.1
+
+ - **FEAT**: support Set<String> without codec.
+
 ## 0.2.0+1
 
 > Note: This release has breaking changes.
