@@ -12,8 +12,8 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   /// using shared preferences.
   ///
   /// The [codec] must not be null, unless your [Value] type is one of the
-  /// simple types that are directly supported by shared_preferences:
-  /// `int`, `bool`, `double`, `String`, or `List<String>`.
+  /// simple types that are directly storable in shared_preferences:
+  /// `int`, `bool`, `double`, `String`, `List<String>`, or `Set<String>`.
   ///
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
@@ -22,15 +22,15 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       assert(
         codec != null || isSimpleType<Value>(),
         'Without a codec, only simple types are supported: '
-        'int, bool, double, String, List<String>.',
+        'int, bool, double, String, List<String>, or Set<String>.',
       );
 
   /// Creates a [PlainStow] to store unencrypted simple values
   /// using shared preferences.
   ///
   /// This constructor only supports simple types that are directly
-  /// supported by shared_preferences: `int`, `bool`, `double`, `String`,
-  /// and `List<String>`.
+  /// storable in shared_preferences: `int`, `bool`, `double`, `String`,
+  /// `List<String>`, or `Set<String>`.
   ///
   /// See also:
   /// - [PlainStow.json] for storing JSON-encodable values.
@@ -40,7 +40,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     : assert(key.isNotEmpty),
       assert(
         isSimpleType<Value>(),
-        'PlainStow.simple only supports int, bool, double, String, List<String>.',
+        'PlainStow.simple only supports int, bool, double, String, List<String>, or Set<String>.',
       );
 
   /// This is the best we can do to assert simple types, but some edge
@@ -50,7 +50,8 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       false is Value ||
       0.0 is Value ||
       '' is Value ||
-      <String>[] is Value;
+      <String>[] is Value ||
+      <String>{} is Value;
 
   /// Creates a [PlainStow] to store unencrypted json-encodable values
   /// using shared preferences.
@@ -78,6 +79,10 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     final encodedValue = prefs.get(key);
     if (encodedValue == null) return defaultValue;
 
+    if (Value == _typeOf<Set<String>>() && codec == null) {
+      return (encodedValue as List<String>).toSet() as Value;
+    }
+
     return codec == null ? encodedValue as Value : codec!.decode(encodedValue);
   }
 
@@ -98,6 +103,8 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       await prefs.setString(key, encodedValue);
     } else if (encodedValue is List<String>) {
       await prefs.setStringList(key, encodedValue);
+    } else if (encodedValue is Iterable<String>) {
+      await prefs.setStringList(key, encodedValue.toList(growable: false));
     } else {
       throw ArgumentError(
         'Tried to write unsupported type to $this: ${encodedValue.runtimeType}',
@@ -110,3 +117,5 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     return 'PlainStow<$Value>($key, $value, $codec)';
   }
 }
+
+Type _typeOf<T>() => T;

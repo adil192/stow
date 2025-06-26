@@ -87,15 +87,16 @@ or codec.
 
 ### Simple types
 
-For types already supported by [shared_preferences] (int, bool, double, String, List\<String\>), you can use the normal `PlainStow` constructor without needing a codec.
+For types already storable in [shared_preferences] (int, bool, double, String, List\<String\>, Set\<String\>), you can use the normal `PlainStow` constructor without needing a codec.
 
 ```dart
   final count = PlainStow.'count', 0);
   final darkMode = PlainStow.'dark_mode', false);
   final highScore = PlainStow.'high_score', 0.0);
   final lastName = PlainStow.'last_name', '');
-  // If needed, you can specify the type explicitly like this:
-  final foreNames = PlainStow<List<String>>('forenames', []);
+  final middleNames = PlainStow('middle_names', <String>[]);
+  // If needed, you can specify the stow type explicitly like this:
+  final pets = PlainStow<Set<String>>('pets', {});
 ```
 
 ### JSON primitive values
