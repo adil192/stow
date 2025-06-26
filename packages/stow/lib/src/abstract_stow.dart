@@ -25,17 +25,18 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// Some implementations of [Stow] may not use this codec at all.
   final Codec<Value, EncodedValue>? codec;
 
+  /// Whether [read] has been run at least once.
+  bool get loaded => _loaded;
+  bool _loaded = false;
+
   final _readMutex = Mutex();
   final _writeMutex = Mutex();
 
-  Value? _value;
+ late Value? _value = defaultValue;
 
   @override
   Value get value {
-    if (_value is! Value) {
-      // i.e. if value is null and [Value] is not nullable
-      throw StateError('Value has not been initialized yet.');
-    }
+    if (!loaded) throw StateError('Value has not been initialized yet.');
     return _value as Value;
   }
 
@@ -62,7 +63,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   Future<void> read() => _readMutex.protect(() async {
     final newValue = await protectedRead();
     setValueWithoutNotifying(newValue);
-    // TODO(adil192): Maybe notify but don't write?
+    _loaded = true;
   });
 
   /// Writes the current [value] to the underlying storage.
