@@ -1,3 +1,7 @@
+## 1.2.0+1
+
+ - **CHORE**: Add example for pub.dev
+
 ## 1.2.0
 
  - **FEAT**: add BoolToStringCodec.
