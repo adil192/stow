@@ -32,14 +32,9 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   final _readMutex = Mutex();
   final _writeMutex = Mutex();
 
-  late Value? _value = defaultValue;
-
   @override
-  Value get value {
-    if (!loaded) throw StateError('Value has not been initialized yet.');
-    return _value as Value;
-  }
-
+  Value get value => _value;
+  late Value _value = defaultValue;
   @override
   set value(Value value) {
     if (_value == value) return;
