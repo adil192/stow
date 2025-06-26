@@ -1,3 +1,8 @@
+## 0.3.1
+
+- **TWEAK**: Stows will notify listeners when loaded
+- **TWEAK**: Tests can now set `Stow.loaded`
+
 ## 0.3.0
 
 > Note: This release has breaking changes.
