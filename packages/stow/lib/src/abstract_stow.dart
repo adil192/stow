@@ -32,7 +32,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   final _readMutex = Mutex();
   final _writeMutex = Mutex();
 
- late Value? _value = defaultValue;
+  late Value? _value = defaultValue;
 
   @override
   Value get value {
@@ -94,8 +94,16 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// Waits until the read mutex is unlocked.
   Future<void> waitUntilRead() => _readMutex.protect(() async {});
 
+  /// Whether a read operation is currently in progress.
+  /// Also see [waitUntilRead] and [loaded].
+  bool get isReading => _readMutex.isLocked;
+
   /// Waits until the write mutex is unlocked.
   Future<void> waitUntilWritten() => _writeMutex.protect(() async {});
+
+  /// Whether a write operation is currently in progress.
+  /// Also see [waitUntilWritten].
+  bool get isWriting => _writeMutex.isLocked;
 
   @override
   @mustBeOverridden
