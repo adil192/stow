@@ -1,6 +1,6 @@
 name: stow_secure
 description: A Stow package to store encrypted data in flutter_secure_storage.
-version: 0.2.0+1
+version: 0.3.0
 resolution: workspace
 repository: https://github.com/adil192/stow
 
@@ -20,7 +20,7 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ">=9.0.0 <11.0.0"
   stow: ^0.3.0
-  stow_codecs: ^1.1.1
+  stow_codecs: ^1.2.0
 
 dev_dependencies:
   flutter_lints: ^5.0.0

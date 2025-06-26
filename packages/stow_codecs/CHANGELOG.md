@@ -1,3 +1,7 @@
+## 1.2.0
+
+ - **FEAT**: add BoolToStringCodec.
+
 ## 1.1.1
 
  - **FIX**: pub.dev complaining about no flutter dependency for stow_codecs.

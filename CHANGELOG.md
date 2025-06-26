@@ -11,6 +11,39 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`stow_secure` - `v0.3.0`](#stow_secure---v030)
+
+Packages with other changes:
+
+ - [`stow_codecs` - `v1.2.0`](#stow_codecs---v120)
+ - [`stow_plain` - `v0.2.1+1`](#stow_plain---v0211)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `stow_plain` - `v0.2.1+1`
+
+---
+
+#### `stow_secure` - `v0.3.0`
+
+ - **FEAT**: add SecureStow.bool constructor.
+ - **BREAKING** **REF**: rename SecureStow.numerical to SecureStow.int.
+
+#### `stow_codecs` - `v1.2.0`
+
+ - **FEAT**: add BoolToStringCodec.
+
+
+## 2025-06-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - There are no breaking changes in this release.
 
 Packages with other changes:

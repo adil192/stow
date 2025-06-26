@@ -25,4 +25,4 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  stow_codecs: ^1.1.1
+  stow_codecs: ^1.2.0

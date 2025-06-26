@@ -1,6 +1,6 @@
 name: stow_plain
 description: A Stow package to store plaintext data in shared preferences.
-version: 0.2.1
+version: 0.2.1+1
 resolution: workspace
 repository: https://github.com/adil192/stow
 
@@ -17,7 +17,7 @@ environment:
 dependencies:
   shared_preferences: ^2.5.3
   stow: ^0.3.0
-  stow_codecs: ^1.1.1
+  stow_codecs: ^1.2.0
 
 dev_dependencies:
   flutter_lints: ^5.0.0

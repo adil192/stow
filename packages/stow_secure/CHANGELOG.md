@@ -1,3 +1,10 @@
+## 0.3.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add SecureStow.bool constructor.
+ - **BREAKING** **REF**: rename SecureStow.numerical to SecureStow.int.
+
 ## 0.2.0+1
 
 > Note: This release has breaking changes.
