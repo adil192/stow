@@ -63,8 +63,8 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   @visibleForTesting
   Future<void> read() => _readMutex.protect(() async {
     final newValue = await protectedRead();
-    setValueWithoutNotifying(newValue);
     _loaded = true;
+    value = newValue;
   });
 
   /// Writes the current [value] to the underlying storage.
