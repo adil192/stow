@@ -11,6 +11,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`stow` - `v0.4.0`](#stow---v040)
+ - [`stow_plain` - `v0.4.0`](#stow_plain---v040)
+ - [`stow_secure` - `v0.4.0`](#stow_secure---v040)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `stow` - `v0.4.0`
+
+ - **BREAKING** **FEAT**: replace `autoRead` with `volatile` which disables reads/writes.
+
+#### `stow_plain` - `v0.4.0`
+
+ - **BREAKING** **FEAT**: replace `autoRead` with `volatile` which disables reads/writes.
+
+#### `stow_secure` - `v0.4.0`
+
+ - **BREAKING** **FEAT**: replace `autoRead` with `volatile` which disables reads/writes.
+
+
+## 2025-06-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - There are no breaking changes in this release.
 
 Packages with other changes:

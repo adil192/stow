@@ -1,3 +1,9 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: replace `autoRead` with `volatile` which disables reads/writes.
+
 ## 0.2.1+3
 
  - **FIX**: codecs don't need nullable args.

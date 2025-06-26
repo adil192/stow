@@ -1,3 +1,9 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: replace `autoRead` with `volatile`, which disables reads/writes.
+
 ## 0.3.0
 
 > Note: This release has breaking changes.
