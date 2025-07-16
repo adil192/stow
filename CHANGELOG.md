@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-07-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`stow` - `v0.4.0+1`](#stow---v0401)
+ - [`stow_plain` - `v0.4.0+1`](#stow_plain---v0401)
+ - [`stow_secure` - `v0.4.0+1`](#stow_secure---v0401)
+
+---
+
+#### `stow` - `v0.4.0+1`
+
+ - **FIX**: don't disregard singletons as being equal to default value.
+
+#### `stow_plain` - `v0.4.0+1`
+
+ - **FIX**: don't disregard singletons as being equal to default value.
+
+#### `stow_secure` - `v0.4.0+1`
+
+ - **FIX**: don't disregard singletons as being equal to default value.
+
+
 ## 2025-06-26
 
 ### Changes

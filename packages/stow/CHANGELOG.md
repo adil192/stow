@@ -1,3 +1,7 @@
+## 0.4.0+1
+
+ - **FIX**: don't disregard singletons as being equal to default value.
+
 ## 0.4.0
 
 > Note: This release has breaking changes.
