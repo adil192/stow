@@ -111,15 +111,29 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// Reads from the underlying storage and returns a value if found
   /// or the [defaultValue] otherwise.
   @protected
-  @mustBeOverridden
   @visibleForTesting
   Future<Value> protectedRead();
 
   /// Writes a [value] to the underlying storage.
   @protected
-  @mustBeOverridden
   @visibleForTesting
   Future<void> protectedWrite(Value value);
+
+  @protected
+  @visibleForTesting
+  EncodedValue? encode(Value? value) {
+    if (codec == null) return value as EncodedValue?;
+    if (value == null) return null;
+    return codec!.encode(value);
+  }
+
+  @protected
+  @visibleForTesting
+  Value? decode(EncodedValue? encodedValue) {
+    if (codec == null) return encodedValue as Value;
+    if (encodedValue == null) return null;
+    return codec!.decode(encodedValue);
+  }
 
   /// Waits until the read mutex is unlocked.
   Future<void> waitUntilRead() => _readMutex.protect(() async {});

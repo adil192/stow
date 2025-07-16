@@ -102,30 +102,12 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   @override
   Future<Value> protectedRead() async {
     final encodedValue = await storage.read(key: key);
-    if (encodedValue == null) return defaultValue;
-
-    if (codec == null) {
-      // If no codec is provided, we assume the value is directly storable.
-      return encodedValue as Value;
-    }
-
-    try {
-      return codec!.decode(encodedValue);
-    } catch (e) {
-      // TODO(adil192): Handle decoding errors somehow
-      rethrow;
-    }
+    return decode(encodedValue) ?? defaultValue;
   }
 
   @override
   Future<void> protectedWrite(Value value) async {
-    final String? encodedValue;
-    try {
-      encodedValue = codec?.encode(value) ?? value as String?;
-    } catch (e) {
-      // TODO(adil192): Handle encoding errors somehow
-      rethrow;
-    }
+    final encodedValue = encode(value);
 
     if (encodedValue == null || value == encodedDefaultValue) {
       await storage.delete(key: key);

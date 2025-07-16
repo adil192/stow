@@ -79,9 +79,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     final encodedValue = prefs.get(key);
     if (encodedValue == null) return defaultValue;
 
-    final decodedValue = codec == null
-        ? encodedValue
-        : codec!.decode(encodedValue);
+    final decodedValue = decode(encodedValue);
 
     if (Value == _typeOf<Set<String>>()) {
       // Convert List<dynamic> to Set<String>
@@ -94,15 +92,9 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     }
   }
 
-  Object? _encode(Value value) {
-    if (codec == null) return value;
-    if (value == null) return null;
-    return codec!.encode(value);
-  }
-
   @override
   Future<void> protectedWrite(Value value) async {
-    final encodedValue = _encode(value);
+    final encodedValue = encode(value);
 
     final prefs = await SharedPreferences.getInstance();
     if (encodedValue == null || value == encodedDefaultValue) {
