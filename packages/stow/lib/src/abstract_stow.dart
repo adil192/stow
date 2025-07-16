@@ -65,6 +65,10 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     notifyListeners();
   }
 
+  /// The last value read from the underlying storage,
+  /// used so we don't write it again if [notifyListeners] gets called.
+  Value? _lastReadValue;
+
   /// Sets [value] without calling [notifyListeners].
   @protected
   @visibleForTesting
@@ -83,9 +87,9 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
       return;
     }
 
-    final newValue = await protectedRead();
+    _lastReadValue = await protectedRead();
     _loaded = true;
-    value = newValue;
+    value = _lastReadValue as Value;
   });
 
   /// Writes the current [value] to the underlying storage.
@@ -98,8 +102,10 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   @visibleForTesting
   Future<void> write() => _writeMutex.protect(() async {
     if (volatile) return;
+    if (value == _lastReadValue) return;
 
     await protectedWrite(value);
+    _lastReadValue = value;
   });
 
   /// Reads from the underlying storage and returns a value if found
