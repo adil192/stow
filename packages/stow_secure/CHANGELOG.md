@@ -1,3 +1,9 @@
+## 0.5.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **REF**: protectedRead and protectedWrite are independent of codec.
+
 ## 0.4.0+1
 
  - **FIX**: don't disregard singletons as being equal to default value.

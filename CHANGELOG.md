@@ -11,6 +11,39 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`stow` - `v0.5.0`](#stow---v050)
+ - [`stow_plain` - `v0.5.0`](#stow_plain---v050)
+ - [`stow_secure` - `v0.5.0`](#stow_secure---v050)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `stow` - `v0.5.0`
+
+ - **FIX**: loading a stow shouldn't induce a write.
+ - **BREAKING** **REF**: protectedRead and protectedWrite are independent of codec.
+
+#### `stow_plain` - `v0.5.0`
+
+ - **FIX**: clone encodedDefaultValue with identity codec.
+ - **BREAKING** **REF**: protectedRead and protectedWrite are independent of codec.
+
+#### `stow_secure` - `v0.5.0`
+
+ - **BREAKING** **REF**: protectedRead and protectedWrite are independent of codec.
+
+
+## 2025-07-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - There are no breaking changes in this release.
 
 Packages with other changes:
