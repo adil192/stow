@@ -17,7 +17,7 @@ void main() {
       'existing': existingValue,
 
       // shared_preferences casts from dynamic to string because of platform differences
-      'existing_list': List<dynamic>.from([existingValue]),
+      'existing_list': <dynamic>[existingValue],
     });
 
     test('Read when not present', () async {
@@ -26,7 +26,7 @@ void main() {
       await stow.waitUntilRead();
       expect(stow.value, defaultValue);
 
-      expect(await stow.protectedRead(), defaultValue);
+      expect(await stow.protectedRead(), isNull);
     });
 
     test('Read when present', () async {
@@ -61,7 +61,7 @@ void main() {
       expect(stow1.value, newValue);
       expect(await stow1.protectedRead(), newValue);
       expect(stow2.value, defaultValue);
-      expect(await stow2.protectedRead(), defaultValue);
+      expect(await stow2.protectedRead(), isNull);
     });
 
     test('List<String>', () async {
@@ -95,7 +95,7 @@ void main() {
 
       stowWithoutCodec.value = arrayEncoded;
       await stowWithoutCodec.waitUntilWritten();
-      expect(await stowWithCodec.protectedRead(), arrayDecoded);
+      expect(await stowWithCodec.protectedRead(), arrayEncoded);
     });
 
     test('json (non-primitive)', () async {
@@ -111,7 +111,7 @@ void main() {
       stow.value = wrapInt1;
       await stow.waitUntilWritten();
       expect(stow.value, wrapInt1);
-      expect(await stow.protectedRead(), wrapInt1);
+      expect(await stow.protectedRead(), jsonEncode(wrapInt1));
     });
 
     test('color', () async {
@@ -124,7 +124,7 @@ void main() {
       stow.value = red;
       await stow.waitUntilWritten();
       expect(stow.value, red);
-      expect(await stow.protectedRead(), red);
+      expect(await stow.protectedRead(), red.toARGB32());
     });
 
     test('color? (null value)', () async {
@@ -136,7 +136,7 @@ void main() {
       stow.value = red;
       await stow.waitUntilWritten();
       expect(stow.value, red);
-      expect(await stow.protectedRead(), red);
+      expect(await stow.protectedRead(), red.toARGB32());
 
       stow.value = null;
       await stow.waitUntilWritten();
@@ -151,7 +151,7 @@ void main() {
       stow.value = Pet.dog;
       await stow.waitUntilWritten();
       expect(stow.value, Pet.dog);
-      expect(await stow.protectedRead(), Pet.dog);
+      expect(await stow.protectedRead(), Pet.dog.index);
     });
   });
 }
