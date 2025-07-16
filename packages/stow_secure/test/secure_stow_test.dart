@@ -40,18 +40,14 @@ void main() {
     test('int', () async {
       const defaultValue = 1;
       const newValue = 2;
-      final stow = SecureStow.int(
-        'int',
-        defaultValue,
-        codec: IdentityCodec(),
-      );
+      final stow = SecureStow.int('int', defaultValue, codec: IdentityCodec());
       await stow.waitUntilRead();
       expect(stow.value, defaultValue);
 
       stow.value = newValue;
       await stow.waitUntilWritten();
       expect(stow.value, newValue);
-      expect(await stow.protectedRead(), newValue);
+      expect(await stow.protectedRead(), newValue.toString());
     });
   });
 }

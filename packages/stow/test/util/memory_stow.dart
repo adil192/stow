@@ -26,9 +26,13 @@ class MemoryStow<Value> extends Stow<String, Value, Value> {
   @override
   @protected
   @visibleForTesting
-  Future<void> protectedWrite(Value value) async {
+  Future<void> protectedWrite(Value? value) async {
     printOnFailure('MemoryStow: Writing value $value for key $key');
-    _store[key] = value;
+    if (value == null || value == defaultValue) {
+      _store.remove(key);
+    } else {
+      _store[key] = value;
+    }
   }
 
   @override

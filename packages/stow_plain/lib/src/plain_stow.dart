@@ -73,29 +73,13 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
        super(codec: TypedJsonCodec(fromJson: fromJson));
 
   @override
-  Future<Value> protectedRead() async {
+  Future<Object?> protectedRead() async {
     final prefs = await SharedPreferences.getInstance();
-
-    final encodedValue = prefs.get(key);
-    if (encodedValue == null) return defaultValue;
-
-    final decodedValue = decode(encodedValue);
-
-    if (Value == _typeOf<Set<String>>()) {
-      // Convert List<dynamic> to Set<String>
-      return (decodedValue as List<dynamic>).cast<String>().toSet() as Value;
-    } else if (Value == _typeOf<List<String>>()) {
-      // Convert List<dynamic> to List<String>
-      return (decodedValue as List<dynamic>).cast<String>() as Value;
-    } else {
-      return decodedValue as Value;
-    }
+    return prefs.get(key);
   }
 
   @override
-  Future<void> protectedWrite(Value value) async {
-    final encodedValue = encode(value);
-
+  Future<void> protectedWrite(Object? encodedValue) async {
     final prefs = await SharedPreferences.getInstance();
     if (encodedValue == null || value == encodedDefaultValue) {
       await prefs.remove(key);
@@ -115,6 +99,25 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       throw ArgumentError(
         'Tried to write unsupported type to $this: ${encodedValue.runtimeType}',
       );
+    }
+  }
+
+  @override
+  Value? decode(Object? encodedValue) {
+    if (encodedValue == null) return null;
+    final decodedValue = codec == null
+        ? encodedValue
+        : codec!.decode(encodedValue);
+    if (decodedValue == null) {
+      return null;
+    } else if (Value == _typeOf<Set<String>>()) {
+      // Convert List<dynamic> to Set<String>
+      return (decodedValue as List<dynamic>).cast<String>().toSet() as Value;
+    } else if (Value == _typeOf<List<String>>()) {
+      // Convert List<dynamic> to List<String>
+      return (decodedValue as List<dynamic>).cast<String>() as Value;
+    } else {
+      return decodedValue as Value;
     }
   }
 

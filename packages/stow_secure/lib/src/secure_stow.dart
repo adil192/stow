@@ -100,15 +100,10 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   late final storage = FlutterSecureStorage();
 
   @override
-  Future<Value> protectedRead() async {
-    final encodedValue = await storage.read(key: key);
-    return decode(encodedValue) ?? defaultValue;
-  }
+  Future<String?> protectedRead() async => storage.read(key: key);
 
   @override
-  Future<void> protectedWrite(Value value) async {
-    final encodedValue = encode(value);
-
+  Future<void> protectedWrite(String? encodedValue) async {
     if (encodedValue == null || value == encodedDefaultValue) {
       await storage.delete(key: key);
     } else {

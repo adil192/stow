@@ -9,12 +9,8 @@ import 'package:mutex/mutex.dart';
 /// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     implements ValueNotifier<Value> {
-  Stow(this.key, this.defaultValue, {this.codec, this.volatile = false})
-    : encodedDefaultValue = defaultValue == null
-          ? null
-          : (codec != null
-                ? codec.encode(defaultValue)
-                : defaultValue as EncodedValue?) {
+  Stow(this.key, this.defaultValue, {this.codec, this.volatile = false}) {
+    encodedDefaultValue = encode(defaultValue);
     unawaited(read());
     addListener(write);
   }
@@ -27,7 +23,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
 
   /// The default value after being encoded with the [codec].
   /// If no codec is provided, this is the same as [defaultValue].
-  final EncodedValue? encodedDefaultValue;
+  late final EncodedValue? encodedDefaultValue;
 
   /// A codec to encode and decode the value to/from the underlying storage.
   /// If null, the value is assumed to be directly storable.
@@ -67,7 +63,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
 
   /// The last value read from the underlying storage,
   /// used so we don't write it again if [notifyListeners] gets called.
-  Value? _lastReadValue;
+  EncodedValue? _lastReadValue;
 
   /// Sets [value] without calling [notifyListeners].
   @protected
@@ -89,7 +85,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
 
     _lastReadValue = await protectedRead();
     _loaded = true;
-    value = _lastReadValue as Value;
+    value = decode(_lastReadValue) ?? defaultValue;
   });
 
   /// Writes the current [value] to the underlying storage.
@@ -102,22 +98,23 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   @visibleForTesting
   Future<void> write() => _writeMutex.protect(() async {
     if (volatile) return;
-    if (value == _lastReadValue) return;
 
-    await protectedWrite(value);
-    _lastReadValue = value;
+    final encodedValue = encode(value);
+    if (encodedValue == _lastReadValue) return;
+
+    await protectedWrite(encodedValue);
+    _lastReadValue = encodedValue;
   });
 
-  /// Reads from the underlying storage and returns a value if found
-  /// or the [defaultValue] otherwise.
+  /// Reads from the underlying storage and returns a value if found.
   @protected
   @visibleForTesting
-  Future<Value> protectedRead();
+  Future<EncodedValue?> protectedRead();
 
   /// Writes a [value] to the underlying storage.
   @protected
   @visibleForTesting
-  Future<void> protectedWrite(Value value);
+  Future<void> protectedWrite(EncodedValue? value);
 
   @protected
   @visibleForTesting
@@ -130,7 +127,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   @protected
   @visibleForTesting
   Value? decode(EncodedValue? encodedValue) {
-    if (codec == null) return encodedValue as Value;
+    if (codec == null) return encodedValue as Value?;
     if (encodedValue == null) return null;
     return codec!.decode(encodedValue);
   }
