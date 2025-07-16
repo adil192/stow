@@ -127,7 +127,7 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
       rethrow;
     }
 
-    if (encodedValue == null || value == defaultValue) {
+    if (encodedValue == null || value == encodedDefaultValue) {
       await storage.delete(key: key);
     } else {
       await storage.write(key: key, value: encodedValue);

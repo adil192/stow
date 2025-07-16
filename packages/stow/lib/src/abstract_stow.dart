@@ -9,7 +9,12 @@ import 'package:mutex/mutex.dart';
 /// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     implements ValueNotifier<Value> {
-  Stow(this.key, this.defaultValue, {this.codec, this.volatile = false}) {
+  Stow(this.key, this.defaultValue, {this.codec, this.volatile = false})
+    : encodedDefaultValue = defaultValue == null
+          ? null
+          : (codec != null
+                ? codec.encode(defaultValue)
+                : defaultValue as EncodedValue?) {
     unawaited(read());
     addListener(write);
   }
@@ -19,6 +24,10 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
 
   /// The value to use if the underlying storage does not contain a value.
   final Value defaultValue;
+
+  /// The default value after being encoded with the [codec].
+  /// If no codec is provided, this is the same as [defaultValue].
+  final EncodedValue? encodedDefaultValue;
 
   /// A codec to encode and decode the value to/from the underlying storage.
   /// If null, the value is assumed to be directly storable.
