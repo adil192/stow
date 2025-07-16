@@ -3,39 +3,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stow_plain/stow_plain.dart';
 
 void main() {
-  test('Singleton', () async {
+  test('Modifying the default value should still write', () async {
     SharedPreferences.setMockInitialValues({});
-    final stow = PlainStow.json(
-      'singleton',
-      _Singleton.defaultInstance,
-      fromJson: (json) => _Singleton.fromJson(json as Map<String, dynamic>),
-    );
+    final stow = PlainStow('stringList', <String>[]);
     await stow.waitUntilRead();
-    expect(stow.value.value, 0);
+    expect(stow.value, <String>[]);
 
-    stow.value.value = 42;
+    stow.value.add('before_write');
     stow.notifyListeners();
     await stow.waitUntilWritten();
-
     final storedValue = await stow.protectedRead();
-    stow.value.value = 84; // Make sure the default value isn't returned
-    expect(storedValue.value, 42);
+
+    // Modify the original so we can distinguish it from the stored value
+    stow.value.add('after_write');
+
+    expect(
+      storedValue,
+      isNot(equals(stow.value)),
+      reason:
+          'A non-null value should have been written, so protectedRead should not have returned the defaultValue',
+    );
+    expect(storedValue, <String>['before_write']);
   });
-}
-
-class _Singleton {
-  _Singleton._();
-  static final defaultInstance = _Singleton._();
-
-  int value = 0;
-
-  Map<String, dynamic> toJson() {
-    return {'value': value};
-  }
-
-  factory _Singleton.fromJson(Map<String, dynamic> json) {
-    final instance = _Singleton._();
-    instance.value = json['value'] as int;
-    return instance;
-  }
 }
