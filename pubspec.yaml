@@ -14,7 +14,7 @@ dev_dependencies:
 melos:
   scripts:
     test:single:
-      run: melos exec --dir-exists="test" --fail-fast -- flutter test --no-pub --coverage
+      run: melos exec --dir-exists="test" -- flutter test --no-pub --coverage
       description: Run Flutter tests for a specific package in this project.
       packageFilters:
         dirExists:
