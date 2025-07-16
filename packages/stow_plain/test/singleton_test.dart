@@ -8,6 +8,7 @@ void main() {
     final stow = PlainStow('stringList', <String>[]);
     await stow.waitUntilRead();
     expect(stow.value, <String>[]);
+    expect(stow.encodedDefaultValue, <String>[]);
 
     stow.value.add('modified');
     stow.notifyListeners();

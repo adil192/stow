@@ -102,12 +102,26 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
     }
   }
 
+  Object? encode(Value? value) {
+    final encodedValue = super.encode(value);
+    if (identical(encodedValue, value)) {
+      // Clone if possible to distinguish from default value
+      if (encodedValue is List) return encodedValue.toList(growable: false);
+      if (encodedValue is Set) return encodedValue.toSet();
+      if (encodedValue is Map) return Map.from(encodedValue);
+    }
+    return encodedValue;
+  }
+
   @override
   Value? decode(Object? encodedValue) {
     if (encodedValue == null) return null;
     final decodedValue = codec == null
         ? encodedValue
         : codec!.decode(encodedValue);
+
+    // Shared preferences stores List<String> as List<dynamic> etc,
+    // so we need to cast it back to the expected type.
     if (decodedValue == null) {
       return null;
     } else if (Value == _typeOf<Set<String>>()) {
