@@ -4,10 +4,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mutex/mutex.dart';
-import 'package:synchronized/synchronized.dart';
 
-
-final Lock globalStorageWriteLock = Lock(); // important to write to Windows secure storage, to serialize writes between instances of Stow
+final _writeMutex = Mutex();   // write mutex must be common to all instances to achieve serialization of writes
 
 
 /// An abstract class that allows synchronous access to a value
@@ -52,8 +50,6 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     notifyListeners();
   }
 
-  final _readMutex = Mutex();
-  final _writeMutex = Mutex();
 
   @override
   Value get value => _value;
