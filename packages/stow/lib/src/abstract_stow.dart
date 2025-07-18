@@ -50,6 +50,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     notifyListeners();
   }
 
+  final _readMutex = Mutex();
 
   @override
   Value get value => _value;
