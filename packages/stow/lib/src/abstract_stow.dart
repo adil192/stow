@@ -4,6 +4,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mutex/mutex.dart';
+import 'package:synchronized/synchronized.dart';
+
+
+final Lock globalStorageWriteLock = Lock(); // important to write to Windows secure storage, to serialize writes between instances of Stow
+
 
 /// An abstract class that allows synchronous access to a value
 /// from some asynchronous storage. Actual implementations may vary.

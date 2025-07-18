@@ -102,13 +102,15 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   @override
   Future<String?> protectedRead() async => storage.read(key: key);
 
-  @override
+@override
   Future<void> protectedWrite(String? encodedValue) async {
-    if (encodedValue == null || value == encodedDefaultValue) {
-      await storage.delete(key: key);
-    } else {
-      await storage.write(key: key, value: encodedValue);
-    }
+    await globalStorageWriteLock.synchronized(() async {   // serialize writes between Stow instances, important on Windows
+      if (encodedValue == null || encodedValue == encodedDefaultValue) {
+        await storage.delete(key: key);
+      } else {
+        await storage.write(key: key, value: encodedValue);
+      }
+    });
   }
 
   @override
