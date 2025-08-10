@@ -129,7 +129,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
       return (decodedValue as List<dynamic>).cast<String>().toSet() as Value;
     } else if (Value == _typeOf<List<String>>()) {
       // Convert List<dynamic> to List<String>
-      return (decodedValue as List<dynamic>).cast<String>() as Value;
+      return (decodedValue as List<dynamic>).cast<String>().toList() as Value;
     } else {
       return decodedValue as Value;
     }
