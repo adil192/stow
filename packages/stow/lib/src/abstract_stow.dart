@@ -5,6 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mutex/mutex.dart';
 
+final _writeMutex = Mutex();   // write mutex must be common to all instances to achieve serialization of writes
+
+
 /// An abstract class that allows synchronous access to a value
 /// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
@@ -48,7 +51,6 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   }
 
   final _readMutex = Mutex();
-  final _writeMutex = Mutex();
 
   @override
   Value get value => _value;

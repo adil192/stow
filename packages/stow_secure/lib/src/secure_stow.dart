@@ -102,14 +102,14 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
   @override
   Future<String?> protectedRead() async => storage.read(key: key);
 
-  @override
+@override
   Future<void> protectedWrite(String? encodedValue) async {
-    if (encodedValue == null || value == encodedDefaultValue) {
+    if (encodedValue == null || encodedValue == encodedDefaultValue) {
       await storage.delete(key: key);
     } else {
       await storage.write(key: key, value: encodedValue);
     }
-  }
+}
 
   @override
   String toString() => 'SecureStow<$Value>($key, $value, $codec)';
