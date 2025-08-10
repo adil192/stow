@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-08-10
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`stow_plain` - `v0.5.1`](#stow_plain---v051)
+
+---
+
+#### `stow_plain` - `v0.5.1`
+
+ - **FIX**: Lists should be growable (resizeable) after being read
+
+
 ## 2025-07-16
 
 ### Changes

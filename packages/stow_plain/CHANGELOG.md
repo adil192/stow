@@ -1,3 +1,7 @@
+## 0.5.1
+
+ - **FIX**: Lists should be growable (resizeable) after being read
+
 ## 0.5.0
 
 > Note: This release has breaking changes.
