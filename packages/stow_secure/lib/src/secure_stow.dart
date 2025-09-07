@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mutex/mutex.dart';
 import 'package:stow/stow.dart';
 import 'package:stow_codecs/stow_codecs.dart';
 
@@ -113,4 +114,12 @@ class SecureStow<Value> extends Stow<String, Value, String?> {
 
   @override
   String toString() => 'SecureStow<$Value>($key, $value, $codec)';
+
+  @override
+  @visibleForOverriding
+  final writeMutex = _globalWriteMutex;
+
+  /// flutter_secure_storage can only handle one write at a time,
+  /// so we use one write mutex across all secure stows.
+  static final _globalWriteMutex = Mutex();
 }

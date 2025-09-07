@@ -47,8 +47,10 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     notifyListeners();
   }
 
-  final _readMutex = Mutex();
-  final _writeMutex = Mutex();
+  @visibleForOverriding
+  final readMutex = Mutex();
+  @visibleForOverriding
+  final writeMutex = Mutex();
 
   @override
   Value get value => _value;
@@ -77,7 +79,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
 
   /// Reads from the underlying storage and sets [value].
   @visibleForTesting
-  Future<void> read() => _readMutex.protect(() async {
+  Future<void> read() => readMutex.protect(() async {
     if (volatile) {
       loaded = true;
       return;
@@ -96,7 +98,7 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// Conversely, if you need to manually trigger a write,
   /// use [notifyListeners].
   @visibleForTesting
-  Future<void> write() => _writeMutex.protect(() async {
+  Future<void> write() => writeMutex.protect(() async {
     if (volatile) return;
 
     final encodedValue = encode(value);
@@ -133,18 +135,18 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   }
 
   /// Waits until the read mutex is unlocked.
-  Future<void> waitUntilRead() => _readMutex.protect(() async {});
+  Future<void> waitUntilRead() => readMutex.protect(() async {});
 
   /// Whether a read operation is currently in progress.
   /// Also see [waitUntilRead] and [loaded].
-  bool get isReading => _readMutex.isLocked;
+  bool get isReading => readMutex.isLocked;
 
   /// Waits until the write mutex is unlocked.
-  Future<void> waitUntilWritten() => _writeMutex.protect(() async {});
+  Future<void> waitUntilWritten() => writeMutex.protect(() async {});
 
   /// Whether a write operation is currently in progress.
   /// Also see [waitUntilWritten].
-  bool get isWriting => _writeMutex.isLocked;
+  bool get isWriting => writeMutex.isLocked;
 
   @override
   @mustBeOverridden
