@@ -49,5 +49,51 @@ void main() {
       expect(stow.value, newValue);
       expect(await stow.protectedRead(), newValue.toString());
     });
+
+    test('should delete for default value (no codec)', () async {
+      final stow = SecureStow('delete_no_codec', defaultValue);
+      await stow.waitUntilRead();
+      expect(stow.value, defaultValue);
+
+      stow.value = newValue;
+      await stow.waitUntilWritten();
+      expect(stow.value, newValue);
+      expect(await stow.protectedRead(), newValue);
+
+      stow.value = defaultValue;
+      await stow.waitUntilWritten();
+      expect(stow.value, defaultValue);
+      expect(await stow.protectedRead(), isNull);
+    });
+
+    test('should delete for default value (with codec)', () async {
+      final stow = SecureStow(
+        'delete_with_codec',
+        _Fruit.cherry,
+        codec: _Fruit.codec,
+      );
+      await stow.waitUntilRead();
+      expect(stow.value, _Fruit.cherry);
+
+      stow.value = _Fruit.banana;
+      await stow.waitUntilWritten();
+      expect(stow.value, _Fruit.banana);
+      expect(await stow.protectedRead(), _Fruit.banana.index.toString());
+
+      stow.value = stow.defaultValue;
+      await stow.waitUntilWritten();
+      expect(stow.value, _Fruit.cherry);
+      expect(await stow.protectedRead(), isNull);
+    });
   });
+}
+
+enum _Fruit {
+  apple,
+  banana,
+  cherry;
+
+  static final codec = EnumCodec<_Fruit, int?>(
+    values,
+  ).fuse(IntToStringCodec());
 }
