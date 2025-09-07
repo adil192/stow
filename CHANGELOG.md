@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-09-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`stow` - `v0.5.1`](#stow---v051)
+ - [`stow_secure` - `v0.5.1`](#stow_secure---v051)
+
+---
+
+#### `stow` - `v0.5.1`
+
+ - **TWEAK**: `Stow.readMutex` and `Stow.writeMutex` are now overridable in subclasses.
+
+#### `stow_secure` - `v0.5.1`
+
+ - **FIX**: Prevent concurrent writes to fix values not being saved on Windows, thank you to @QubaB in [#1](https://github.com/adil192/stow/pull/1).
+ - **FIX**: Fixed a typo causing the default value to be stored unnecessarily when using a codec, thank you to @QubaB in [#1](https://github.com/adil192/stow/pull/1).
+
+
 ## 2025-08-10
 
 ### Changes

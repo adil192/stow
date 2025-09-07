@@ -1,3 +1,8 @@
+## 0.5.1
+
+ - **FIX**: Prevent concurrent writes to fix values not being saved on Windows, thank you to @QubaB in [#1](https://github.com/adil192/stow/pull/1).
+ - **FIX**: Fixed a typo causing the default value to be stored unnecessarily when using a codec, thank you to @QubaB in [#1](https://github.com/adil192/stow/pull/1).
+
 ## 0.5.0
 
 > Note: This release has breaking changes.

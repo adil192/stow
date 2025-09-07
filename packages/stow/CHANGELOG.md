@@ -1,3 +1,7 @@
+## 0.5.1
+
+ - **TWEAK**: `Stow.readMutex` and `Stow.writeMutex` are now overridable in subclasses.
+
 ## 0.5.0
 
 > Note: This release has breaking changes.
