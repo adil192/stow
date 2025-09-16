@@ -15,9 +15,14 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`stow` - `v0.5.1+1`](#stow---v0511)
  - [`stow_codecs` - `v1.3.0`](#stow_codecs---v130)
 
 ---
+
+#### `stow` - `v0.5.1+1`
+
+ - **DOCS**: fill in base stow README.
 
 #### `stow_codecs` - `v1.3.0`
 

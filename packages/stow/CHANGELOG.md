@@ -1,3 +1,7 @@
+## 0.5.1+1
+
+ - **DOCS**: fill in base stow README.
+
 ## 0.5.1
 
  - **TWEAK**: `Stow.readMutex` and `Stow.writeMutex` are now overridable in subclasses.
