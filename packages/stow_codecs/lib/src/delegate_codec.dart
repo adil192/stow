@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:stow_codecs/stow_codecs.dart';
 
-/// A [Codec] that delegates encoding and decoding to provided functions.
+/// A [Codec] that delegates encoding and decoding to functions
+/// provided to its constructor.
 ///
 /// This is useful for creating simple codecs without needing to define
 /// a full class and its converter classes.

@@ -6,7 +6,7 @@ import 'package:stow_codecs/stow_codecs.dart';
 /// An abtract [Codec] whose [encode] and [decode] methods need to be
 /// overridden.
 ///
-/// This reduces the usual boilerplate required to extend [Codec] directly,
+/// This requires less boilerplate than extending [Codec] directly
 /// since you don't need to define the [Converter] classes separately.
 ///
 /// A simple example:
