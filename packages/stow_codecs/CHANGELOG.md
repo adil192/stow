@@ -1,3 +1,8 @@
+## 1.3.0
+
+ - **FEAT**: add AbstractCodec and DelegateCodec.
+ - **TWEAK**: made some codecs `const`.
+
 ## 1.2.0+1
 
  - **CHORE**: Add example for pub.dev
