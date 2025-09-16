@@ -4,7 +4,7 @@ import 'package:stow_codecs/stow_codecs.dart';
 
 /// Encodes a [Color] as an ARGB32 integer.
 class ColorCodec<Encoded extends Object> extends AbstractCodec<Color, Encoded> {
-  ColorCodec()
+  const ColorCodec()
     : assert(0 is Encoded, 'ColorCodec\'s Encoded type must accept an integer');
 
   @override

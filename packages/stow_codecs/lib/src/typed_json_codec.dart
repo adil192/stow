@@ -3,7 +3,7 @@ import 'dart:convert';
 /// A codec that wraps the standard [JsonCodec] to loosen its type constraints.
 /// This allows us to use it with e.g. [PlainStow] more easily.
 class TypedJsonCodec<T, Encoded extends Object?> extends Codec<T, Encoded> {
-  TypedJsonCodec({this.fromJson, this.child = const JsonCodec()})
+  const TypedJsonCodec({this.fromJson, this.child = const JsonCodec()})
     : assert(
         '' is Encoded ||
             0 is Encoded ||

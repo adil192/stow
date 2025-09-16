@@ -3,7 +3,7 @@ import 'package:stow_codecs/stow_codecs.dart';
 /// Encodes an enum value as its ([Enum.index]).
 class EnumCodec<T extends Enum, Encoded extends Object?>
     extends AbstractCodec<T, Encoded> {
-  EnumCodec(this.values)
+  const EnumCodec(this.values)
     : assert(0 is Encoded, 'EnumCodec\'s Encoded type must accept an integer');
 
   /// All possible values of the enum type [T].
