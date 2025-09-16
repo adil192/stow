@@ -1,25 +1,12 @@
-import 'dart:convert';
+import 'package:stow_codecs/stow_codecs.dart';
 
 /// Encodes an integer by calling toString() on it.
-class IntToStringCodec extends Codec<int?, String?> {
+class IntToStringCodec extends AbstractCodec<int?, String?> {
   const IntToStringCodec();
 
   @override
-  final encoder = const _IntEncoder();
-  @override
-  final decoder = const _IntDecoder();
-}
-
-class _IntEncoder extends Converter<int?, String?> {
-  const _IntEncoder();
+  String? encode(int? input) => input?.toString();
 
   @override
-  String? convert(int? input) => input?.toString();
-}
-
-class _IntDecoder extends Converter<String?, int?> {
-  const _IntDecoder();
-
-  @override
-  int? convert(String? input) => int.tryParse(input ?? '');
+  int? decode(String? encoded) => int.tryParse(encoded ?? '');
 }

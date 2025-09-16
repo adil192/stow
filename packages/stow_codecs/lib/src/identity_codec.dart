@@ -1,20 +1,13 @@
-import 'dart:convert';
+import 'package:stow_codecs/stow_codecs.dart';
 
 /// A codec that does not change the input or output types.
 /// It simply passes the data through unchanged.
-class IdentityCodec<T> extends Codec<T, T> {
+class IdentityCodec<T> extends AbstractCodec<T, T> {
   const IdentityCodec();
 
   @override
-  Converter<T, T> get encoder => _IdentityConverter<T>();
+  T encode(T input) => input;
 
   @override
-  Converter<T, T> get decoder => _IdentityConverter<T>();
-}
-
-class _IdentityConverter<T> extends Converter<T, T> {
-  const _IdentityConverter();
-
-  @override
-  T convert(T input) => input;
+  T decode(T encoded) => encoded;
 }

@@ -1,33 +1,20 @@
-import 'dart:convert';
+import 'package:stow_codecs/stow_codecs.dart';
 
-class BoolToStringCodec extends Codec<bool, String> {
+class BoolToStringCodec extends AbstractCodec<bool, String> {
   const BoolToStringCodec();
 
   @override
-  final encoder = const _BoolEncoder();
-  @override
-  final decoder = const _BoolDecoder();
-}
-
-class _BoolEncoder extends Converter<bool, String> {
-  const _BoolEncoder();
+  String encode(bool input) => input ? 'true' : 'false';
 
   @override
-  String convert(bool input) => input ? 'true' : 'false';
-}
-
-class _BoolDecoder extends Converter<String, bool> {
-  const _BoolDecoder();
-
-  @override
-  bool convert(String input) {
-    if (input == 'true') return true;
-    if (input == 'false') return false;
+  bool decode(String encoded) {
+    if (encoded == 'true') return true;
+    if (encoded == 'false') return false;
 
     // More options to increase compatibility
-    if (input == '1' || input.toLowerCase().startsWith('y')) return true;
-    if (input == '0' || input.toLowerCase().startsWith('n')) return false;
+    if (encoded == '1' || encoded.toLowerCase().startsWith('y')) return true;
+    if (encoded == '0' || encoded.toLowerCase().startsWith('n')) return false;
 
-    throw FormatException('Invalid boolean string: $input');
+    throw FormatException('Invalid boolean string: $encoded');
   }
 }

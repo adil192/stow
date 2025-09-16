@@ -1,33 +1,23 @@
-import 'dart:convert';
 import 'dart:ui' show Color;
 
+import 'package:stow_codecs/stow_codecs.dart';
+
 /// Encodes a [Color] as an ARGB32 integer.
-class ColorCodec<Encoded extends Object> extends Codec<Color, Encoded> {
+class ColorCodec<Encoded extends Object> extends AbstractCodec<Color, Encoded> {
   ColorCodec()
     : assert(0 is Encoded, 'ColorCodec\'s Encoded type must accept an integer');
 
   @override
-  final encoder = _ColorEncoder<Encoded>();
-  @override
-  final decoder = _ColorDecoder<Encoded>();
-}
-
-class _ColorEncoder<Encoded extends Object> extends Converter<Color, Encoded> {
-  const _ColorEncoder();
+  Encoded encode(Color input) => input.toARGB32() as Encoded;
 
   @override
-  Encoded convert(Color color) => color.toARGB32() as Encoded;
-}
-
-class _ColorDecoder<Encoded extends Object> extends Converter<Encoded, Color> {
-  const _ColorDecoder();
-
-  @override
-  Color convert(Object? input) {
-    if (input is int) {
-      return Color(input);
+  Color decode(Encoded encoded) {
+    if (encoded is int) {
+      return Color(encoded);
     }
 
-    throw ArgumentError('Invalid color input: (${input.runtimeType}) $input');
+    throw ArgumentError(
+      'Invalid color input: (${encoded.runtimeType}) $encoded',
+    );
   }
 }

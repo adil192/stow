@@ -1,8 +1,8 @@
-import 'dart:convert';
+import 'package:stow_codecs/stow_codecs.dart';
 
 /// Encodes an enum value as its ([Enum.index]).
 class EnumCodec<T extends Enum, Encoded extends Object?>
-    extends Codec<T, Encoded> {
+    extends AbstractCodec<T, Encoded> {
   EnumCodec(this.values)
     : assert(0 is Encoded, 'EnumCodec\'s Encoded type must accept an integer');
 
@@ -10,31 +10,15 @@ class EnumCodec<T extends Enum, Encoded extends Object?>
   final List<T> values;
 
   @override
-  late final encoder = _EnumEncoder<T, Encoded>();
-  @override
-  late final decoder = _EnumDecoder<T, Encoded>(values);
-}
-
-class _EnumEncoder<T extends Enum, Encoded extends Object?>
-    extends Converter<T, Encoded> {
-  const _EnumEncoder();
+  Encoded encode(T input) => input.index as Encoded;
 
   @override
-  Encoded convert(T input) => input.index as Encoded;
-}
-
-class _EnumDecoder<T extends Enum, Encoded extends Object?>
-    extends Converter<Encoded, T> {
-  const _EnumDecoder(this.values);
-
-  /// All possible values of the enum type [T].
-  final List<T> values;
-
-  @override
-  T convert(Object? input) {
-    if (input is int && input >= 0 && input < values.length) {
-      return values[input];
+  T decode(Object? encoded) {
+    if (encoded is int && encoded >= 0 && encoded < values.length) {
+      return values[encoded];
     }
-    throw ArgumentError('Invalid $T enum index: (${input.runtimeType}) $input');
+    throw ArgumentError(
+      'Invalid $T enum index: (${encoded.runtimeType}) $encoded',
+    );
   }
 }
