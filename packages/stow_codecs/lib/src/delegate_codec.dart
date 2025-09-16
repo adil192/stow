@@ -20,11 +20,9 @@ import 'package:stow_codecs/stow_codecs.dart';
 /// The main advantage of [AbstractCodec] over [DelegateCodec] is that you
 /// can make it `const`.
 class DelegateCodec<S, T> extends AbstractCodec<S, T> {
-  const DelegateCodec({
-    required T Function(S) encode,
-    required S Function(T) decode,
-  }) : encodeDelegate = encode,
-       decodeDelegate = decode;
+  DelegateCodec({required T Function(S) encode, required S Function(T) decode})
+    : encodeDelegate = encode,
+      decodeDelegate = decode;
 
   final T Function(S) encodeDelegate;
   final S Function(T) decodeDelegate;
