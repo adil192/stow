@@ -1,3 +1,8 @@
+## 1.4.0
+
+ - **FEAT**: Added DateTimeCodec.
+ - **TWEAK**: Tightened codec generic types.
+
 ## 1.3.0
 
  - **FEAT**: add AbstractCodec and DelegateCodec.
