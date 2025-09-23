@@ -68,6 +68,13 @@ e.g. `Color(0xFF123456)` <-> `0xFF123456`.
 
 Usage: `const ColorCodec()`.
 
+### `DateTimeCodec`
+
+Encodes a `DateTime` as an ISO 8601 string,
+e.g. `DateTime.utc(1969, 7, 20, 20, 18, 04)` <-> `'1969-07-20T20:18:04.000Z'`.
+
+Usage: `const DateTimeCodec()`.
+
 ### `EnumCodec`
 
 Encodes an enum value as its index,
