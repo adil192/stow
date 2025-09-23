@@ -6,14 +6,14 @@ enum Pets {
   dog,
   fish;
 
-  static final codec = EnumCodec(values);
+  static const codec = EnumCodec(values);
 }
 
 void main() {
   assert(Pets.codec.encode(Pets.cat) == Pets.cat.index);
   assert(Pets.codec.decode(Pets.dog.index) == Pets.dog);
 
-  final colorCodec = ColorCodec<int>();
+  const colorCodec = ColorCodec();
   assert(colorCodec.encode(Colors.red) == Colors.red.toARGB32());
   assert(colorCodec.decode(Colors.blue.toARGB32()) == Colors.blue);
 }

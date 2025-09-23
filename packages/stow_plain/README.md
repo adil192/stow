@@ -144,7 +144,7 @@ enum GameMode {
   medium,
   hard;
 
-  static final codec = EnumCodec(values);
+  static const codec = EnumCodec(values);
 }
 ```
 
@@ -152,7 +152,7 @@ Or if you can't modify the enum, just create the EnumCodec inline:
 
 ```dart
   final targetPlatform = PlainStow('target_platform', kTargetPlatform,
-      codec: EnumCodec(TargetPlatform.values));
+      codec: const EnumCodec(TargetPlatform.values));
 ```
 
 ### Other

@@ -145,7 +145,11 @@ void main() {
     });
 
     test('enum', () async {
-      final stow = PlainStow('pet', Pet.cat, codec: EnumCodec(Pet.values));
+      final stow = PlainStow(
+        'pet',
+        Pet.cat,
+        codec: const EnumCodec(Pet.values),
+      );
       await stow.waitUntilRead();
 
       stow.value = Pet.dog;

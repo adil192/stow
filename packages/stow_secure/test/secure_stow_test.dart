@@ -67,7 +67,7 @@ void main() {
     });
 
     test('should delete for default value (with codec)', () async {
-      final stow = SecureStow(
+      final stow = SecureStow.int(
         'delete_with_codec',
         _Fruit.cherry,
         codec: _Fruit.codec,
@@ -93,7 +93,5 @@ enum _Fruit {
   banana,
   cherry;
 
-  static final codec = EnumCodec<_Fruit, int?>(
-    values,
-  ).fuse(IntToStringCodec());
+  static const codec = EnumCodec(values);
 }

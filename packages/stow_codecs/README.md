@@ -79,7 +79,7 @@ enum Fruits {
   apple, banana, cherry;
 
   // Define it directly in the enum...
-  static final codec = EnumCodec(values);
+  static const codec = EnumCodec(values);
 }
 // ...or outside the enum...
 final codec = EnumCodec(Fruits.values);
