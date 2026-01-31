@@ -32,13 +32,17 @@ class MyStorageStow<MyValue> extends Stow<MyKey, MyValue, MyEncodedValue> {
   static final _myStorage = MyStorage();
 
   @override
-  Future<MyEncodedValue> protectedRead() async {
-    return _myStorage.get<MyEncodedValue>(key) ?? encodedDefaultValue;
+  Future<MyEncodedValue?> protectedRead() async {
+    return _myStorage.get<MyEncodedValue>(key);
   }
 
   @override
-  Future<void> protectedWrite(MyEncodedValue encodedValue) async {
-    await _myStorage.set<MyEncodedValue>(key, encodedValue);
+  Future<void> protectedWrite(MyEncodedValue? encodedValue) async {
+    if (encodedValue == null || encodedValue == encodedDefaultValue) {
+      await _myStorage.remove(key);
+    } else {
+      await _myStorage.set<MyEncodedValue>(key, encodedValue);
+    }
   }
 }
 ```
