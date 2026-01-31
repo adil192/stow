@@ -81,7 +81,7 @@ class PlainStow<Value> extends Stow<String, Value, Object?> {
   @override
   Future<void> protectedWrite(Object? encodedValue) async {
     final prefs = await SharedPreferences.getInstance();
-    if (encodedValue == null || value == encodedDefaultValue) {
+    if (encodedValue == null || encodedValue == encodedDefaultValue) {
       await prefs.remove(key);
     } else if (encodedValue is int) {
       await prefs.setInt(key, encodedValue);
