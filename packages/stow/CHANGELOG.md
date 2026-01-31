@@ -1,3 +1,14 @@
+## 0.6.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Disable read/write in tests by default.
+
+   In previous versions of stow, you needed to set volatile to false in tests
+   to avoid platform channel errors.
+
+   This is now the default behaviour. If needed, you can override this behaviour by setting `Stow.volatileInTests` to false.
+
 ## 0.5.1+1
 
  - **DOCS**: fill in base stow README.
@@ -54,4 +65,3 @@
 
  - **FEAT**: add PlainStow for shared preferences.
  - **FEAT**: add Stow, MemoryStow, and IdentityCodec.
-

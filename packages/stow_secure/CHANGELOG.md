@@ -1,3 +1,14 @@
+## 0.6.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: Disable read/write in tests by default.
+
+   In previous versions of stow, you needed to set volatile to false in tests
+   to avoid platform channel errors.
+
+   This is now the default behaviour. If needed, you can override this behaviour by setting `Stow.volatileInTests` to false.
+
 ## 0.5.1
 
  - **FIX**: Prevent concurrent writes to fix values not being saved on Windows, thank you to @QubaB in [#1](https://github.com/adil192/stow/pull/1).
@@ -48,4 +59,3 @@
 ## 0.1.0
 
  - **FEAT**: add stow_secure.
-

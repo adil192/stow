@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-01-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`stow` - `v0.6.0`](#stow---v060)
+ - [`stow_plain` - `v0.6.0`](#stow_plain---v060)
+ - [`stow_secure` - `v0.6.0`](#stow_secure---v060)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `stow` - `v0.6.0`
+
+ - **BREAKING** **FEAT**: disable read/write in tests by default.
+
+#### `stow_plain` - `v0.6.0`
+
+ - **FIX**: compare encoded value to default encoded value.
+ - **BREAKING** **TWEAK**: tighten codec generic types.
+ - **BREAKING** **FEAT**: disable read/write in tests by default.
+
+#### `stow_secure` - `v0.6.0`
+
+ - **FIX**: prevent concurrent writes in secure stows.
+ - **FIX**: don't store default value in SecureStow.
+ - **BREAKING** **TWEAK**: tighten codec generic types.
+ - **BREAKING** **FEAT**: disable read/write in tests by default.
+
+
 ## 2025-09-23
 
 ### Changes
