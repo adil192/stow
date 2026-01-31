@@ -3,6 +3,7 @@ import 'dart:ui' show Color;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stow/stow.dart';
 import 'package:stow_codecs/stow_codecs.dart';
 import 'package:stow_plain/stow_plain.dart';
 
@@ -19,6 +20,7 @@ void main() {
       // shared_preferences casts from dynamic to string because of platform differences
       'existing_list': <dynamic>[existingValue],
     });
+    Stow.volatileInTests = false; // allow using mocked shared preferences
 
     test('Read when not present', () async {
       final stow = PlainStow('missing', defaultValue);

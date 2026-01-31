@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:stow/stow.dart';
 import 'package:stow_codecs/stow_codecs.dart';
 import 'package:stow_secure/stow_secure.dart';
 
@@ -7,6 +8,7 @@ import 'util/mock_storage.dart';
 void main() {
   group('SecureStow', () {
     setupMockFlutterSecureStorage();
+    Stow.volatileInTests = false;
 
     const defaultValue = 'default_value';
     const newValue = 'new_value';

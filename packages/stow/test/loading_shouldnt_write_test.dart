@@ -3,6 +3,7 @@ import 'package:stow/stow.dart';
 
 void main() {
   test('Loading a stow shouldn\'t induce a write', () async {
+    Stow.volatileInTests = false;
     final stow = _CountingStow();
     await stow.waitUntilRead();
     expect(stow.readCount, 1, reason: 'Stow should be read once on load');

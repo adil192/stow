@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart' hide Key;
 import 'package:meta/meta.dart';
 import 'package:mutex/mutex.dart';
+import 'package:stow/src/is_this_a_test.dart';
 
 /// An abstract class that allows synchronous access to a value
 /// from some asynchronous storage. Actual implementations may vary.
 abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
     implements ValueNotifier<Value> {
-  Stow(this.key, this.defaultValue, {this.codec, this.volatile = false}) {
+  Stow(this.key, this.defaultValue, {this.codec, bool volatile = false})
+    : _volatile = volatile {
     encodedDefaultValue = encode(defaultValue);
     unawaited(read());
     addListener(write);
@@ -33,9 +35,22 @@ abstract class Stow<Key, Value, EncodedValue> extends ChangeNotifier
   /// If [volatile] is true, [read] and [write] will be disabled
   /// meaning nothing gets stored or read.
   ///
-  /// This is useful in testing environments or to avoid platform channel
-  /// issues with secondary isolates.
-  final bool volatile;
+  /// This is useful if you are doing work in isolates, where platform channels
+  /// for storage plugins are not available.
+  ///
+  /// In previous versions of stow, you needed to set volatile to false in tests
+  /// to avoid platform channel errors. This is no longer necessary thanks to
+  /// [Stow.volatileInTests].
+  bool get volatile => _volatile || (volatileInTests && isThisATest);
+  final bool _volatile;
+
+  /// By default, [volatile] is automatically set to true in tests to avoid
+  /// platform channel errors.
+  ///
+  /// You can override this behaviour by setting [Stow.volatileInTests] to
+  /// false.
+  @visibleForTesting
+  static bool volatileInTests = true;
 
   /// Whether [read] has been run at least once.
   bool get loaded => _loaded;

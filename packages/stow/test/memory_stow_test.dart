@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:stow/stow.dart';
 
 import 'util/memory_stow.dart';
 
@@ -6,6 +7,7 @@ void main() {
   group('MemoryStow', () {
     const defaultValue = 'default_value';
     const newValue = 'new_value';
+    Stow.volatileInTests = false;
 
     test('Read', () async {
       final stow = MemoryStow<String>('read', defaultValue);

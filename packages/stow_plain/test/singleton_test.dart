@@ -1,10 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stow/stow.dart';
 import 'package:stow_plain/stow_plain.dart';
 
 void main() {
   test('Modifying the default value should still write', () async {
     SharedPreferences.setMockInitialValues({});
+    Stow.volatileInTests = false;
+
     final stow = PlainStow('stringList', <String>[]);
     await stow.waitUntilRead();
     expect(stow.value, <String>[]);
