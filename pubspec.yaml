@@ -9,7 +9,7 @@ workspace:
   - packages/stow_plain
   - packages/stow_secure
 dev_dependencies:
-  melos: ^7.1.0
+  melos: ^8.2.2
 
 melos:
   scripts:
