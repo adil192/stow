@@ -1,3 +1,9 @@
+## 0.7.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **CHORE**: Update to [`flutter_secure_storage: ^11.0.0`](https://pub.dev/packages/flutter_secure_storage/versions/11.0.0).
+
 ## 0.6.0
 
 > Note: This release has breaking changes.

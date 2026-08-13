@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-08-13
+
+### Changes
+
+---
+
+Packages with (potentially) breaking changes:
+
+ - [`stow_secure` - `v0.7.0`](#stow_secure---v070)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `stow_secure` - `v0.7.0`
+
+ - **BREAKING** **CHORE**: Update to [`flutter_secure_storage: ^11.0.0`](https://pub.dev/packages/flutter_secure_storage/versions/11.0.0).
+
+
 ## 2026-01-31
 
 ### Changes
